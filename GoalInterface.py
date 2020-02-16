@@ -1,5 +1,6 @@
 import abc
 
+
 class GoalInterface(object, metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def set_date(self, date):
@@ -11,4 +12,8 @@ class GoalInterface(object, metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def set_checkin_duration(self, days):
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def get_progress(self):
         raise NotImplementedError()
