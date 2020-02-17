@@ -13,7 +13,7 @@ class User:
         # load user details
         self.__name = name
         self.__dob = datetime.datetime.strptime(dob, "%d/%m/%Y").date()
-        Gender = Enum('Gender', 'Male Female')
+        Gender = Enum('Gender', 'Male Female PREFER_NOT_TO_SAY')
         self.__gender = Gender[gender.upper()]
         self.__age = age
         self.__weight = weight
