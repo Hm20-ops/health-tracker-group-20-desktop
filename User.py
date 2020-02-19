@@ -123,15 +123,16 @@ def main():
     session = Session()#we interact with db file in a session
 
     user = User()
-    user.password = "peen"
-    user.username = "micro peen"
-    user.email = "@gmail.com"
-    user.name = "peenocchio"
+    user.password = "Hemal20"
+    user.username = "Munbodh20"
+    user.email = "munbodhhemal20@gmail.com"
+    user.name = "Hemal Munbodh"
     user.gender = 'male'
-    date_str = '23-08-2000'
+    date_str = '20-05-1999'
     date_object = datetime.strptime(date_str, '%d-%m-%Y').date()#converting a date string to date object. See format
     user.dob=date_object
     user.age=user.age_calculator()#mitigates error of inputting wrong age
+
 
     session.add(user)
     session.commit()#need to commit for changes to appear in database
