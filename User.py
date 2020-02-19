@@ -6,15 +6,13 @@
 
 import enum
 import re
-from datetime import datetime,date
+from datetime import datetime
 
 from sqlalchemy import *
 from sqlalchemy import types, create_engine
 from sqlalchemy.dialects.sqlite import DATE
 from sqlalchemy.ext.declarative import *
 from sqlalchemy.orm import sessionmaker
-
-#from Group import Group
 
 Base = declarative_base()
 engine = create_engine('sqlite:///User.db', echo=True)
@@ -34,42 +32,13 @@ class User(Base):
     password = Column('password', String)
     name = Column('name', String)
     dob = Column('dob', DATE(
-        storage_format="%(day)02d/%(month)02d/%(year)04d",
-        regexp=re.compile("(?P<day>\d+)/(?P<month>\d+)/(?P<year>\d+)")
-    ))  # impose strict formatting dd-mm-yyyy
+        storage_format="%(month)02d/%(day)02d/%(year)04d",
+        regexp=re.compile("(?P<month>\d+)/(?P<day>\d+)/(?P<year>\d+)")
+    ))  # impose strict formatting mm-dd-yyyy
     age = Column('age', INTEGER)
     weight = Column('weight', INTEGER)
     height = Column('height', REAL)
     gender = Column(types.Enum('male', 'female', 'other'), nullable=false)
-
-    def create_group(self):
-        # Create a new group
-        group_goal = None
-        group = Group('name', 'OPEN', [self], [self], group_goal)
-        self.__groups.append(group)
-
-    def join_group(self, id):
-        pass
-
-    def leave_group(self):
-        pass
-
-    def edit_details(self):
-        pass
-
-    def create_goal(self):
-        pass
-
-    def create_exercise(self):
-        pass
-
-    def create_diet(self):
-        pass
-
-    def age_calculator(self):
-        today = date.today()
-        age = today.year - self.dob.year -((today.month, today.day) <(self.dob.month, self.dob.day))
-        return age
 
     #
     # def __init__(self, username, name, email, dob, password, gender, age, weight, height):
@@ -120,21 +89,20 @@ class User(Base):
 def main():
     Base.metadata.create_all(bind=engine)
     Session = sessionmaker(bind=engine)
-    session = Session()#we interact with db file in a session
-
+    session = Session()
     user = User()
+    user.dob = "12/20/1999"
     user.password = "peen"
     user.username = "micro peen"
     user.email = "@gmail.com"
     user.name = "peenocchio"
     user.gender = 'male'
-    date_str = '23-08-2000'
-    date_object = datetime.strptime(date_str, '%d-%m-%Y').date()#converting a date string to date object. See format
+    date_str = '09-19-2018'
+    date_object = datetime.strptime(date_str, '%m-%d-%Y').date()
     user.dob=date_object
-    user.age=user.age_calculator()#mitigates error of inputting wrong age
 
     session.add(user)
-    session.commit()#need to commit for changes to appear in database
+    session.commit()
     session.close()
 
 
