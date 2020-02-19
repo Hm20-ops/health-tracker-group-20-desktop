@@ -1,6 +1,6 @@
 from datetime import datetime
 from enum import Enum
-from User import User
+import User
 
 
 class Group:

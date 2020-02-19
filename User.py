@@ -1,11 +1,11 @@
-# To do:
-# 1.Optimise imports
-# 2.Reformat dob into dd/mm/yyyy
-# 3.Think about how to store group arrays
-# 4.Define all database constraints
-
-import enum
+'''
+TODO:
+    1.Optimise imports
+    2.Define all database constraints
+'''
+from enum import Enum
 import re
+import Group
 from datetime import datetime,date
 
 from sqlalchemy import *
@@ -20,10 +20,10 @@ Base = declarative_base()
 engine = create_engine('sqlite:///User.db', echo=True)
 
 
-class Gender(enum.Enum):
-    male = 1
-    female = 2
-    other = 3
+# class Gender(Enum):
+#     male = 1
+#     female = 2
+#     other = 3
 
 
 class User(Base):
@@ -38,9 +38,10 @@ class User(Base):
         regexp=re.compile("(?P<day>\d+)/(?P<month>\d+)/(?P<year>\d+)")
     ))  # impose strict formatting dd-mm-yyyy
     age = Column('age', INTEGER)
-    weight = Column('weight', INTEGER)
+    weight = Column('weight', REAL)         #both weight and height should be real
     height = Column('height', REAL)
-    gender = Column(types.Enum('male', 'female', 'other'), nullable=false)
+    Gender = Enum('Gender', 'MALE FEMALE PREFER_NOT_TO_SAY')
+    gender = Column('Gender', Gender, nullable=false)
 
     def create_group(self):
         # Create a new group
@@ -136,6 +137,7 @@ def main():
 
     session.add(user)
     session.commit()#need to commit for changes to appear in database
+
     session.close()
 
 
