@@ -14,7 +14,7 @@ from sqlalchemy.dialects.sqlite import DATE
 from sqlalchemy.ext.declarative import *
 from sqlalchemy.orm import sessionmaker
 
-#from Group import Group
+
 
 Base = declarative_base()
 engine = create_engine('sqlite:///User.db', echo=True)
