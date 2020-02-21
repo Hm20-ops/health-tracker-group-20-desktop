@@ -6,13 +6,14 @@ TODO:
 from enum import Enum
 import re
 import Group
+from Diet import UserMeal
 from datetime import datetime,date
 
 from sqlalchemy import *
 from sqlalchemy import types, create_engine
 from sqlalchemy.dialects.sqlite import DATE
 from sqlalchemy.ext.declarative import *
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, relationship
 
 
 
