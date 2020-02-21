@@ -29,19 +29,18 @@ engine = create_engine('sqlite:///User.db', echo=True)
 class User(Base):
     __tablename__ = "User"
     # We do not need to define a constructor. See main() for example
-    username = Column('username', String, primary_key=True)  # these attributes map directly to columns in the table
-    email = Column('email', String, unique=True)
-    password = Column('password', String)
-    name = Column('name', String)
-    dob = Column('dob', DATE(
+    username = Column(String, primary_key=True)  # these attributes map directly to columns in the table
+    email = Column(String, unique=True)
+    password = Column(String)
+    name = Column(String)
+    dob = Column(DATE(
         storage_format="%(day)02d/%(month)02d/%(year)04d",
         regexp=re.compile("(?P<day>\d+)/(?P<month>\d+)/(?P<year>\d+)")
     ))  # impose strict formatting dd-mm-yyyy
-    age = Column('age', INTEGER)
-    weight = Column('weight', REAL)         #both weight and height should be real
-    height = Column('height', REAL)
-    Gender = Enum('Gender', 'MALE FEMALE PREFER_NOT_TO_SAY')
-    gender = Column('Gender', Gender, nullable=false)
+    age = Column(INTEGER)
+    weight = Column(REAL)         #both weight and height should be real
+    height = Column(REAL)
+    gender = Column(Enum('male', 'female', 'other'), nullable=false)
 
     def create_group(self):
         # Create a new group
