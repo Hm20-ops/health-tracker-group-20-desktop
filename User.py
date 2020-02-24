@@ -43,7 +43,7 @@ class User(Base):
         user.email = email
         user.name = name
         user.gender = gender
-        date_object = datetime.strptime(dob, '%d-%m-%Y').date()  # converting a date string to date object. See format
+        date_object = datetime.strptime(dob, '%d/%m/%Y').date()  # converting a date string to date object. See format
         user.dob = date_object
         user.age = user.age_calculator()
         user.weight = weight
@@ -96,6 +96,11 @@ class User(Base):
         today = date.today()
         age = today.year - self.dob.year -((today.month, today.day) <(self.dob.month, self.dob.day))
         return age
+
+    def make_session(self):
+        Session = sessionmaker(bind=engine)
+        session = Session()
+        return session
 
 def main():
     Base.metadata.create_all(bind=engine)
