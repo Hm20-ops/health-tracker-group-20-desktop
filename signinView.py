@@ -45,7 +45,6 @@ class Ui_signinWindow(object):
         self.create_account = QtWidgets.QPushButton(self.Login)
         self.create_account.setGeometry(QtCore.QRect(650, 60, 75, 23))
         self.create_account.setObjectName("create_account")
-        self.create_account.clicked.connect(lambda: self.stackedWidget.setCurrentIndex(1))
         self.stackedWidget.addWidget(self.Login)
         self.Register = QtWidgets.QWidget()
         self.Register.setObjectName("Register")

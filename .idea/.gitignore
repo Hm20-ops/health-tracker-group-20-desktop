@@ -1,5 +1,7 @@
 # Default ignored files
 /workspace.xml
+/misc.xml
+/health_tracker.iml
 # Datasource local storage ignored files
 /dataSources/
 /dataSources.local.xml

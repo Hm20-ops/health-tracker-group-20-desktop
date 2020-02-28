@@ -9,6 +9,7 @@ from functools import partial
 from sqlalchemy.orm import sessionmaker
 from signinView import Ui_signinWindow
 from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox
+from PyQt5.QtCore import pyqtSlot
 
 
 class RegisterPresenter:
@@ -16,6 +17,8 @@ class RegisterPresenter:
         self._view = MainWindow()
         self._model = User()
         self._view.login.clicked.connect(lambda: self.login())
+        self._view.create_account.clicked.connect(partial(self._view.stackedWidget.setCurrentIndex, 1))
+        self._view.cancel.clicked.connect(partial(self._view.stackedWidget.setCurrentIndex, 0))
         self._view.signup.clicked.connect(lambda: self.add_user())
         self._view.show()
 
@@ -75,9 +78,9 @@ class RegisterPresenter:
         check = session.query(User).filter(User.username == username, User.password == password)
 
         if check.first():
-            print('is valid')
+            print('login success')
         else:
-            print('is not valid')
+            print('login failed')
             msg = QMessageBox()
             msg.setWindowTitle("Login Error")
             msg.setText("username or password is incorrect")
