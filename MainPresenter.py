@@ -2,7 +2,7 @@ import sys
 from functools import partial
 import User
 from BasicGoal import BasicGoal
-from CustomGoal import CustomGoal
+from CustomGoal import *
 from Group import Group
 from Diet import *
 from home_page import Ui_Health_tracker
