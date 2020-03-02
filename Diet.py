@@ -4,9 +4,9 @@ from sqlalchemy import *
 from sqlalchemy.dialects.sqlite import DATE
 from sqlalchemy.ext.declarative import *
 from sqlalchemy.orm import sessionmaker, relationship
-
-Base = declarative_base()
-engine = create_engine('sqlite:///User.db', echo=True)
+from ModelHandler import *
+# Base = declarative_base()
+# engine = create_engine('sqlite:///User.db', echo=True)
 
 class Drink(Base):
     __tablename__ = 'Drink'
@@ -68,7 +68,8 @@ class FoodConsumed(Base):
 
 
 def main():
-    Base.metadata.create_all(bind=engine)
+    pass
+    # Base.metadata.create_all(bind=engine)
     # Session = sessionmaker(bind=engine)
     # session = Session()
 

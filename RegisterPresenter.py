@@ -4,6 +4,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from validate_email import validate_email
 import User
+from MainPresenter import MainPresenter
 from User import User
 from functools import partial
 from sqlalchemy.orm import sessionmaker
@@ -97,17 +98,19 @@ class RegisterPresenter:
         username = self._view.login_username.text()
         password = self._view.login_password.text()
         # check if username and password are correct
-        check = session.query(User).filter(User.username == username, User.password == password)
-
+        check = session.query(User).filter(User.username == username, User.password == password).first()
+        session.close()
         # if the check is successful redirect to the user home page, otherwise display error message
-        if check.first():
+        if check:
             print('login success')
+            self._view.close()
+            return MainPresenter(username)
         else:
             print('login failed')
             self._display_message("Login Error",
                                   "username or password is incorrect")
 
-        session.close()
+
 
     '''
     A helper function to send email to an email address, that is used for when creating account 
@@ -147,6 +150,6 @@ class MainWindow(QMainWindow, Ui_signinWindow):
 if __name__ == '__main__':
     app = QApplication(sys.argv)
 
-    x = RegisterPresenter()
+    RegisterPresenter()
 
     app.exec()

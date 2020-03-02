@@ -1,11 +1,20 @@
+from sqlalchemy.orm import relationship
+from sqlalchemy import *
 from GoalInterface import GoalInterface
+from ModelHandler import *
+from User import User
 
+class BasicGoal(User):
+    __tablename__ = 'BasicGoal'
+    __table_args__ = (
+        CheckConstraint('isMet in (0 ,1)'),
+    )
 
-class BasicGoal(GoalInterface):
-    def __init__(self, target_weight, date):
-        self.target_weight = target_weight
-        self.date = date
-        self.meet = False
+    username = Column(ForeignKey('User.username', ondelete='CASCADE', onupdate='CASCADE'), primary_key=True)
+    target_weight = Column(Float, nullable=False)
+    date = Column(Date, nullable=False)
+    isMet = Column(Integer, nullable=False)
+
 
     def set_date(self, date):
         self.date = date
