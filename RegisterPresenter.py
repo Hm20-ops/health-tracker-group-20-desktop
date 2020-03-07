@@ -4,7 +4,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from validate_email import validate_email
 import User
-from MainPresenter import MainPresenter
+import MainPresenter
 from User import User
 from functools import partial
 from sqlalchemy.orm import sessionmaker
@@ -17,6 +17,7 @@ RegisterPresenter controls the login and registration process of the signin view
 '''
 class RegisterPresenter:
     def __init__(self):
+        self._redirect_to = None
         self._view = MainWindow()
         self._model = User()
         self._view.login.clicked.connect(lambda: self.login())
@@ -103,8 +104,9 @@ class RegisterPresenter:
         # if the check is successful redirect to the user home page, otherwise display error message
         if check:
             print('login success')
+            self._redirect_to = MainPresenter.MainPresenter(username)
             self._view.close()
-            return MainPresenter(username)
+            return self._redirect_to
         else:
             print('login failed')
             self._display_message("Login Error",
