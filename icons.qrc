@@ -1,0 +1,13 @@
+<RCC>
+  <qresource>
+    <file>sidebar_icon/goal.png</file>
+    <file>sidebar_icon/group.png</file>
+    <file>sidebar_icon/home.svg</file>
+    <file>sidebar_icon/logout-512.png</file>
+    <file>sidebar_icon/plus-304947_640.png</file>
+    <file>sidebar_icon/profile.png</file>
+    <file>sidebar_icon/runner.png</file>
+    <file>sidebar_icon/up, arrow, line, progress png icon.png</file>
+    <file>sidebar_icon/vegetarian-diet.png</file>
+  </qresource>
+</RCC>
