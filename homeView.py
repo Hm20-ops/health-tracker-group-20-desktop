@@ -12,6 +12,7 @@ from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 import matplotlib.pyplot as plt
 
+
 class Ui_Home(object):
     def __init__(self, parent, goals):
         self.setupUi(parent, goals)
@@ -94,7 +95,7 @@ class Ui_Home(object):
         # color daily summary header
         self.header = QtWidgets.QLabel(self.wrapper)
         self.header.setStyleSheet("QLabel{\n"
-                                  "background:rgb(255, 0, 0); \n"
+                                  "background:rgb(218, 0, 0); \n"
                                   "color:rgb(59, 59, 59);\n"
                                   "border: none;\n"
                                   "}")
@@ -247,19 +248,8 @@ class Ui_Home(object):
         self.verticalLayout_2.addWidget(self.button_frame)
 
         # show graph
-        self.graph = PlotCanvas(self.daily_summary) #QtWidgets.QTextBrowser(self.daily_summary)
-        # sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding,
-        #                                    QtWidgets.QSizePolicy.MinimumExpanding)
-        # sizePolicy.setHorizontalStretch(0)
-        # sizePolicy.setVerticalStretch(5)
-        # sizePolicy.setHeightForWidth(self.graph.sizePolicy().hasHeightForWidth())
-        # self.graph.setSizePolicy(sizePolicy)
-        # self.graph.setStyleSheet("QTextBrowser{\n"
-        #                          "background:rgb(222, 222, 222); \n"
-        #                          "color:rgb(62, 62, 62);\n"
-        #                          "border: none;\n"
-        #                          "}")
-        # self.graph.setObjectName("graph")
+        self.graph = PlotCanvas(self.daily_summary)
+
         self.verticalLayout_2.addWidget(self.graph)
         self.verticalLayout.addWidget(self.daily_summary)
         self.recent_goals = QtWidgets.QLabel(self.wrapper)
@@ -298,149 +288,6 @@ class Ui_Home(object):
         self.gridLayout_5.setVerticalSpacing(6)
         self.gridLayout_5.setObjectName("gridLayout_5")
         self.display_recent_goals(goals)
-        ###
-        # self.goal_1 = QtWidgets.QGroupBox(self.goals_frame)
-        # sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding,
-        # 								   QtWidgets.QSizePolicy.MinimumExpanding)
-        # sizePolicy.setHorizontalStretch(0)
-        # sizePolicy.setVerticalStretch(0)
-        # sizePolicy.setHeightForWidth(self.goal_1.sizePolicy().hasHeightForWidth())
-        # self.goal_1.setSizePolicy(sizePolicy)
-        # self.goal_1.setMinimumSize(QtCore.QSize(257, 0))
-        # self.goal_1.setStyleSheet("QGroupBox{\n"
-        # 						  "background:rgb(217, 217, 217); \n"
-        # 						  "color:rgb(62, 62, 62);\n"
-        # 						  "}")
-        # self.goal_1.setTitle("")
-        # self.goal_1.setObjectName("goal_1")
-        # self.verticalLayout_9 = QtWidgets.QVBoxLayout(self.goal_1)
-        # self.verticalLayout_9.setObjectName("verticalLayout_9")
-        # self.goal1_date = QtWidgets.QLabel(self.goal_1)
-        # font = QtGui.QFont()
-        # font.setPointSize(15)
-        # self.goal1_date.setFont(font)
-        # self.goal1_date.setStyleSheet("background: none;\n"
-        # 							  "padding: 0 0 0 0;")
-        # self.goal1_date.setObjectName("goal1_date")
-        # self.verticalLayout_9.addWidget(self.goal1_date)
-        # self.goal1_description = QtWidgets.QLabel(self.goal_1)
-        # font = QtGui.QFont()
-        # font.setPointSize(20)
-        # self.goal1_description.setFont(font)
-        # self.goal1_description.setStyleSheet("QLabel{\n"
-        # 									 "background:rgb(217, 217, 217); \n"
-        # 									 "color:rgb(62, 62, 62);\n"
-        # 									 "}")
-        # self.goal1_description.setWordWrap(False)
-        # self.goal1_description.setObjectName("goal1_description")
-        # self.verticalLayout_9.addWidget(self.goal1_description)
-        # self.goal1_progress = QtWidgets.QProgressBar(self.goal_1)
-        # self.goal1_progress.setStyleSheet("QProgressBar::chunk {\n"
-        # 								  "     background-color: #3add36;\n"
-        # 								  "     width: 1px;\n"
-        # 								  " }\n"
-        # 								  "\n"
-        # 								  " QProgressBar {\n"
-        # 								  "     border-radius: 0px;\n"
-        # 								  "     text-align: center;\n"
-        # 								  " }")
-        # self.goal1_progress.setProperty("value", 0)
-        # self.goal1_progress.setInvertedAppearance(False)
-        # self.goal1_progress.setObjectName("goal1_progress")
-        # self.verticalLayout_9.addWidget(self.goal1_progress)
-        # self.gridLayout_5.addWidget(self.goal_1, 0, 0, 1, 1)
-        #
-        # ###
-        # self.goal_2 = QtWidgets.QGroupBox(self.goals_frame)
-        # sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding,
-        # 								   QtWidgets.QSizePolicy.MinimumExpanding)
-        # sizePolicy.setHorizontalStretch(0)
-        # sizePolicy.setVerticalStretch(0)
-        # sizePolicy.setHeightForWidth(self.goal_2.sizePolicy().hasHeightForWidth())
-        # self.goal_2.setSizePolicy(sizePolicy)
-        # self.goal_2.setStyleSheet("QGroupBox{\n"
-        # 						  "background:rgb(217, 217, 217); \n"
-        # 						  "color:rgb(62, 62, 62);\n"
-        # 						  "}")
-        # self.goal_2.setTitle("")
-        # self.goal_2.setObjectName("goal_2")
-        # self.verticalLayout_7 = QtWidgets.QVBoxLayout(self.goal_2)
-        # self.verticalLayout_7.setObjectName("verticalLayout_7")
-        # self.goal2_date = QtWidgets.QLabel(self.goal_2)
-        # font = QtGui.QFont()
-        # font.setPointSize(15)
-        # self.goal2_date.setFont(font)
-        # self.goal2_date.setStyleSheet("background: none;")
-        # self.goal2_date.setObjectName("goal2_date")
-        # self.verticalLayout_7.addWidget(self.goal2_date)
-        # self.goal2_description = QtWidgets.QLabel(self.goal_2)
-        # font = QtGui.QFont()
-        # font.setPointSize(14)
-        # self.goal2_description.setFont(font)
-        # self.goal2_description.setStyleSheet("background: none;")
-        # self.goal2_description.setWordWrap(False)
-        # self.goal2_description.setObjectName("goal2_description")
-        # self.verticalLayout_7.addWidget(self.goal2_description)
-        # self.goal2_progress = QtWidgets.QProgressBar(self.goal_2)
-        # self.goal2_progress.setStyleSheet("QProgressBar::chunk {\n"
-        # 								  "     background-color: #3add36;\n"
-        # 								  "     width: 1px;\n"
-        # 								  " }\n"
-        # 								  "\n"
-        # 								  " QProgressBar {\n"
-        # 								  "     border-radius: 0px;\n"
-        # 								  "     text-align: center;\n"
-        # 								  " }")
-        # self.goal2_progress.setProperty("value", 0)
-        # self.goal2_progress.setObjectName("goal2_progress")
-        # self.verticalLayout_7.addWidget(self.goal2_progress)
-        # self.gridLayout_5.addWidget(self.goal_2, 0, 1, 1, 1)
-        #
-        #
-        # self.goal_3 = QtWidgets.QGroupBox(self.goals_frame)
-        # sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding,
-        # 								   QtWidgets.QSizePolicy.MinimumExpanding)
-        # sizePolicy.setHorizontalStretch(0)
-        # sizePolicy.setVerticalStretch(0)
-        # sizePolicy.setHeightForWidth(self.goal_3.sizePolicy().hasHeightForWidth())
-        # self.goal_3.setSizePolicy(sizePolicy)
-        # self.goal_3.setStyleSheet("QGroupBox{\n"
-        # 						  "background:rgb(217, 217, 217); \n"
-        # 						  "color:rgb(62, 62, 62);\n"
-        # 						  "}")
-        # self.goal_3.setTitle("")
-        # self.goal_3.setObjectName("goal_3")
-        # self.verticalLayout_8 = QtWidgets.QVBoxLayout(self.goal_3)
-        # self.verticalLayout_8.setObjectName("verticalLayout_8")
-        # self.goal3_date = QtWidgets.QLabel(self.goal_3)
-        # font = QtGui.QFont()
-        # font.setPointSize(15)
-        # self.goal3_date.setFont(font)
-        # self.goal3_date.setStyleSheet("background: none;")
-        # self.goal3_date.setObjectName("goal3_date")
-        # self.verticalLayout_8.addWidget(self.goal3_date)
-        # self.goal3_description = QtWidgets.QLabel(self.goal_3)
-        # font = QtGui.QFont()
-        # font.setPointSize(14)
-        # self.goal3_description.setFont(font)
-        # self.goal3_description.setStyleSheet("background: none;")
-        # self.goal3_description.setWordWrap(False)
-        # self.goal3_description.setObjectName("goal_description_3")
-        # self.verticalLayout_8.addWidget(self.goal3_description)
-        # self.goal3_progress = QtWidgets.QProgressBar(self.goal_3)
-        # self.goal3_progress.setStyleSheet("QProgressBar::chunk {\n"
-        # 								  "     background-color: #3add36;\n"
-        # 								  "     width: 1px;\n"
-        # 								  " }\n"
-        # 								  "\n"
-        # 								  " QProgressBar {\n"
-        # 								  "     border-radius: 0px;\n"
-        # 								  "     text-align: center;\n"
-        # 								  " }")
-        # self.goal3_progress.setProperty("value", 0)
-        # self.goal3_progress.setObjectName("goal3_progress")
-        # self.verticalLayout_8.addWidget(self.goal3_progress)
-        # self.gridLayout_5.addWidget(self.goal_3, 0, 2, 1, 1)
 
         self.verticalLayout.addWidget(self.goals_frame)
         self.horizontalLayout_4.addWidget(self.wrapper)
@@ -464,25 +311,14 @@ class Ui_Home(object):
         self.add_exercise.setText(_translate("Home", "Add Exercise"))
         self.add_diet.setText(_translate("Home", "Add Diet"))
         self.add_weight.setText(_translate("Home", "Add Weight"))
-        # self.graph.setHtml(_translate("Home",
-        #                               "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-        #                               "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-        #                               "p, li { white-space: pre-wrap; }\n"
-        #                               "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
-        #                               "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:28pt; font-weight:600;\">Graph</span></p></body></html>"))
         self.recent_goals.setText(_translate("Home", "Recent Goals"))
         for i in range(len(goals)):
-            if hasattr(self, f'goal_{i+1}'):
-                recent_goal_date = getattr(self, f'goal{i+1}_date')
-                recent_goal_description = getattr(self, f'goal{i+1}_description')
+            if hasattr(self, f'goal_{i + 1}'):
+                recent_goal_date = getattr(self, f'goal{i + 1}_date')
+                recent_goal_description = getattr(self, f'goal{i + 1}_description')
                 recent_goal_date.setText(_translate("Home", datetime.strftime(goals[i].date, '%d/%m/%Y')))
                 recent_goal_description.setText(_translate("Home", goals[i].goal_description))
-        # self.goal1_date.setText(_translate("Home", datetime.strftime(goals[0].date, '%d/%m/%Y')))
-        # self.goal1_description.setText(_translate("Home", goals[0].goal_description))
-        # self.goal2_date.setText(_translate("Home", datetime.strftime(goals[1].date, '%d/%m/%Y')))
-        # self.goal2_description.setText(_translate("Home", goals[1].goal_description))
-        # self.goal3_date.setText(_translate("Home", datetime.strftime(goals[2].date, '%d/%m/%Y')))
-        # self.goal3_description.setText(_translate("Home", goals[2].goal_description))
+
 
     def display_recent_goals(self, goals):
         if goals is None:
@@ -499,8 +335,8 @@ class Ui_Home(object):
             no_goal_text.setText('No goal was set yet')
             return
         for i, goal in enumerate(goals):
-            setattr(self, f'goal_{i+1}', QtWidgets.QGroupBox(self.goals_frame))
-            mygoal = getattr(self, f'goal_{i+1}')
+            setattr(self, f'goal_{i + 1}', QtWidgets.QGroupBox(self.goals_frame))
+            mygoal = getattr(self, f'goal_{i + 1}')
             sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
             sizePolicy.setHorizontalStretch(0)
             sizePolicy.setVerticalStretch(0)
@@ -511,29 +347,27 @@ class Ui_Home(object):
                                  "background:rgb(217, 217, 217); \n"
                                  "color:rgb(62, 62, 62);\n"
                                  "}")
-            # self.goal_1.setTitle("")
-            mygoal.setObjectName(f"goal_{i+1}")
+            mygoal.setObjectName(f"goal_{i + 1}")
             verticalLayout = QtWidgets.QVBoxLayout(mygoal)
-            # self.verticalLayout_4.setObjectName("verticalLayout_4")
-            setattr(self, f'goal{i+1}_date', QtWidgets.QLabel(mygoal))
-            deadline = getattr(self, f'goal{i+1}_date')
+            setattr(self, f'goal{i + 1}_date', QtWidgets.QLabel(mygoal))
+            deadline = getattr(self, f'goal{i + 1}_date')
             font = QtGui.QFont()
             font.setPointSize(15)
             deadline.setFont(font)
             deadline.setStyleSheet("background: none;\n"
                                    "padding: 0 0 0 0;")
             deadline.setWordWrap(False)
-            deadline.setObjectName(f"goal{i+1}_date")
+            deadline.setObjectName(f"goal{i + 1}_date")
             deadline.setText(str(goal.date))
             verticalLayout.addWidget(deadline)
-            setattr(self, f'goal{i+1}_description', QtWidgets.QLabel(mygoal))
-            mygoal_description = getattr(self, f'goal{i+1}_description')
+            setattr(self, f'goal{i + 1}_description', QtWidgets.QLabel(mygoal))
+            mygoal_description = getattr(self, f'goal{i + 1}_description')
             font = QtGui.QFont()
             font.setPointSize(20)
             mygoal_description.setFont(font)
             mygoal_description.setStyleSheet("background: none;")
             mygoal_description.setWordWrap(False)
-            mygoal_description.setObjectName(f"mygoal_title_{i+1}")
+            mygoal_description.setObjectName(f"mygoal_title_{i + 1}")
             mygoal_description.setText(f"{goal.goal_description}")
             verticalLayout.addWidget(mygoal_description)
             progressBar = QtWidgets.QProgressBar(mygoal)
@@ -549,24 +383,24 @@ class Ui_Home(object):
                                       " }")
             progressBar.setProperty("value", 10)
             progressBar.setInvertedAppearance(False)
-            progressBar.setObjectName(f"goal{i+1}_progress")
+            progressBar.setObjectName(f"goal{i + 1}_progress")
             verticalLayout.addWidget(progressBar)
 
             self.gridLayout_5.addWidget(mygoal, 0, i, 1, 1)
 
+
+'''
+a canvas class for displaying the graph
+'''
+
 class PlotCanvas(FigureCanvas):
     def __init__(self, parent=None, width=5, height=4, dpi=100):
         fig = Figure(figsize=(width, height), dpi=dpi)
-        #self.axes = fig.add_subplot(111)
 
         FigureCanvas.__init__(self, fig)
         self.setParent(parent)
 
-        # sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding,
-        #                                    QtWidgets.QSizePolicy.MinimumExpanding)
-        # sizePolicy.setHorizontalStretch(0)
-        # sizePolicy.setVerticalStretch(5)
-        #sizePolicy.setHeightForWidth(fig.sizePolicy().hasHeightForWidth())
+
         FigureCanvas.setSizePolicy(self,
                                    QtWidgets.QSizePolicy.MinimumExpanding,
                                    QtWidgets.QSizePolicy.MinimumExpanding)
@@ -575,8 +409,10 @@ class PlotCanvas(FigureCanvas):
 
     def plot(self):
         # import random
-        data = [65, 64.9, 64.6, 64.5, 64.5, 64, 63.67, 62.34, 61, 60, 60, 60, 59.8, 59, 58.7]#[random.random() for i in range(25)]
+        data = [65, 64.9, 64.6, 64.5, 64.5, 64, 63.67, 62.34, 61, 60, 60, 60, 59.8, 59,
+                58.7]  # [random.random() for i in range(25)]
         ax = self.figure.add_subplot(111)
         ax.plot(data, 'r-')
         ax.set_title('Weight trend')
+        plt.setp(ax, xlabel='Day', ylabel='Weight')
         self.draw()

@@ -13,7 +13,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Health_tracker(object):
 	def setupUi(self, Healthtracker):
 		Healthtracker.setObjectName("Healthtracker")
-		Healthtracker.resize(1300, 928)
+		Healthtracker.resize(1600, 900)
 		self.centralwidget = QtWidgets.QWidget(Healthtracker)
 		self.centralwidget.setObjectName("centralwidget")
 		self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.centralwidget)
@@ -98,8 +98,6 @@ class Ui_Health_tracker(object):
 		Healthtracker.setCentralWidget(self.centralwidget)
 
 		self.retranslateUi(Healthtracker)
-		# self.display_page.addWidget(homePresenter(self.display_page, 'test').page())
-		self.display_page.setCurrentIndex(-1)
 		QtCore.QMetaObject.connectSlotsByName(Healthtracker)
 
 	def retranslateUi(self, Healthtracker):

@@ -21,6 +21,7 @@ class Ui_Profile(object):
 		self.verticalLayout.setContentsMargins(0, 0, 0, 0)
 		self.verticalLayout.setSpacing(0)
 		self.verticalLayout.setObjectName("verticalLayout")
+
 		self.frame = QtWidgets.QFrame(Form)
 		self.frame.setStyleSheet("QFrame{\n"
 								 "background-color: rgb(255, 255, 255);\n"
@@ -39,6 +40,7 @@ class Ui_Profile(object):
 		sizePolicy.setHorizontalStretch(0)
 		sizePolicy.setVerticalStretch(1)
 		sizePolicy.setHeightForWidth(self.header.sizePolicy().hasHeightForWidth())
+
 		self.header.setSizePolicy(sizePolicy)
 		self.header.setStyleSheet("QLabel{\n"
 								  "background:rgb(218, 0, 0); \n"
@@ -112,6 +114,8 @@ class Ui_Profile(object):
 		self.formLayout.setWidget(2, QtWidgets.QFormLayout.LabelRole, self.dob_label)
 		self.dob = QtWidgets.QDateEdit(self.user_data)
 		self.dob.setDateTime(QtCore.QDateTime(QtCore.QDate(user_data.dob.year, user_data.dob.month, user_data.dob.day), QtCore.QTime(0, 0, 0)))
+		self.dob.setMinimumDate(QtCore.QDate(1900, 1, 1))
+		self.dob.setMaximumDate(QtCore.QDate(QtCore.QDate.currentDate().year() - 8, 12, 31))
 		self.dob.setObjectName("dob")
 		self.formLayout.setWidget(2, QtWidgets.QFormLayout.FieldRole, self.dob)
 		self.gender_label = QtWidgets.QLineEdit(self.user_data)
@@ -191,9 +195,8 @@ class Ui_Profile(object):
 		sizePolicy.setHeightForWidth(self.edit_info.sizePolicy().hasHeightForWidth())
 		self.edit_info.setSizePolicy(sizePolicy)
 		self.edit_info.setStyleSheet("padding: 10 30 10 30;")
-		# icon = QtGui.QIcon.fromTheme("sidebar_icon")
-		# self.edit_info.setIcon(icon)
 		self.edit_info.setObjectName("edit_info")
+		self.edit_info.setDisabled(True)
 		self.gridLayout.addWidget(self.edit_info, 1, 1, 1, 1, QtCore.Qt.AlignHCenter)
 		self.upload_photo = QtWidgets.QPushButton(self.wrapper)
 		sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)

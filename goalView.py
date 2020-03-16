@@ -257,58 +257,6 @@ class Ui_Goal(object):
         self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.your_goals_frame)
         self.verticalLayout_3.setObjectName("verticalLayout_3")
         self.display_goals(user_goals)
-        # self.goal_1 = QtWidgets.QGroupBox(self.your_goals_frame)
-        # self.goal_1.setEnabled(True)
-        # sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding,
-        #                                    QtWidgets.QSizePolicy.MinimumExpanding)
-        # sizePolicy.setHorizontalStretch(0)
-        # sizePolicy.setVerticalStretch(0)
-        # sizePolicy.setHeightForWidth(self.goal_1.sizePolicy().hasHeightForWidth())
-        # self.goal_1.setSizePolicy(sizePolicy)
-        # self.goal_1.setMinimumSize(QtCore.QSize(257, 0))
-        # self.goal_1.setStyleSheet("QGroupBox{\n"
-        #                           "background:rgb(217, 217, 217); \n"
-        #                           "color:rgb(62, 62, 62);\n"
-        #                           "}")
-        # self.goal_1.setTitle("")
-        # self.goal_1.setObjectName("goal_1")
-        # self.verticalLayout_20 = QtWidgets.QVBoxLayout(self.goal_1)
-        # self.verticalLayout_20.setObjectName("verticalLayout_20")
-        # self.deadline = QtWidgets.QLabel(self.goal_1)
-        # font = QtGui.QFont()
-        # font.setPointSize(20)
-        # self.deadline.setFont(font)
-        # self.deadline.setStyleSheet("background: none;")
-        # self.deadline.setWordWrap(False)
-        # self.deadline.setObjectName("deadline")
-        # self.verticalLayout_20.addWidget(self.deadline)
-        # self.goal_body = QtWidgets.QLabel(self.goal_1)
-        # font = QtGui.QFont()
-        # font.setPointSize(20)
-        # self.goal_body.setFont(font)
-        # self.goal_body.setStyleSheet("QLabel{\n"
-        #                              "background:rgb(217, 217, 217); \n"
-        #                              "color:rgb(62, 62, 62);\n"
-        #                              "}")
-        # self.goal_body.setWordWrap(False)
-        # self.goal_body.setObjectName("goal_body")
-        # self.verticalLayout_20.addWidget(self.goal_body)
-        # self.goal1_progress = QtWidgets.QProgressBar(self.goal_1)
-        # self.goal1_progress.setStyleSheet("QProgressBar::chunk {\n"
-        #                                   "     background-color: #3add36;\n"
-        #                                   "     width: 1px;\n"
-        #                                   " }\n"
-        #                                   "\n"
-        #                                   " QProgressBar {\n"
-        #                                   "     \n"
-        #                                   "     border-radius: 0px;\n"
-        #                                   "     text-align: center;\n"
-        #                                   " }")
-        # self.goal1_progress.setProperty("value", 10)
-        # self.goal1_progress.setInvertedAppearance(False)
-        # self.goal1_progress.setObjectName("goal1_progress")
-        # self.verticalLayout_20.addWidget(self.goal1_progress)
-        # self.verticalLayout_3.addWidget(self.goal_1)
         self.verticalLayout_2.addWidget(self.your_goals_frame)
         self.verticalLayout_22.addLayout(self.verticalLayout_2)
         self.horizontalLayout_14.addWidget(self.wrapper)
@@ -339,8 +287,6 @@ class Ui_Goal(object):
         self.period_label.setText(_translate("Form", "Period"))
         self.info_text.setText(_translate("Form", "Explain how many days per period do you want to repeat this goal"))
         self.Your_goals_header.setText(_translate("Form", "Your Goals"))
-        # self.deadline.setText(_translate("Form", "Completion date: 21/04/2020"))
-        # self.goal_body.setText(_translate("Form", "Eat 100g of chicken"))
 
 
     def display_goals(self, goals):
@@ -373,7 +319,6 @@ class Ui_Goal(object):
                                  "background:rgb(217, 217, 217); \n"
                                  "color:rgb(62, 62, 62);\n"
                                  "}")
-            # self.goal_1.setTitle("")
             mygoal.setObjectName(f"goal_{i + 1}")
             verticalLayout = QtWidgets.QVBoxLayout(mygoal)
 
@@ -419,19 +364,3 @@ class Ui_Goal(object):
             progressBar.setObjectName(f"goal{i + 1}_progress")
             verticalLayout.addWidget(progressBar)
             self.verticalLayout_3.addWidget(mygoal)
-# class MainWindow(QMainWindow, Ui_Goal):
-# 	def __init__(self, *args, obj=None, **kwargs):
-# 		super(MainWindow, self).__init__(*args, **kwargs)
-# 		self.setupUi(self)
-#
-# 	def foo(self):
-# 		return self.scrollArea
-#
-#
-# if __name__ == '__main__':
-# 	app = QApplication(sys.argv)
-#
-# 	x = MainWindow()
-# 	x.setCentralWidget(x.foo())
-# 	x.show()
-# 	app.exec()
