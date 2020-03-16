@@ -1,8 +1,4 @@
-'''
-TODO:
-    1.Optimise imports
-    2.Define all database constraints
-'''
+
 from enum import Enum
 import re
 #import Group
@@ -37,8 +33,6 @@ class User(Base):
     gender = Column(Enum('male', 'female', 'other'), nullable=false)#
 
     def create_user(self, username, email, password, name, dob, weight, height, gender):
-        # Session = sessionmaker(bind=engine)
-        # session = Session()  # we interact with db file in a session
         session = make_session()
         user = User()
         user.password = password
@@ -57,6 +51,12 @@ class User(Base):
 
         session.close()
 
+    def get_user(self, username):
+        session = make_session()
+        user = session.query(User).get(username)
+        session.close()
+        return user
+
     def create_group(self):
         # Create a new group
         group_goal = None
@@ -69,19 +69,18 @@ class User(Base):
     def leave_group(self):
         pass
 
-    def edit_details(self, username, email, password, name, dob, weight, height, gender):
-        Session = sessionmaker(bind=engine)
-        session = Session()  # we interact with db file in a session
-        self.password = password
-        self.username = username
-        self.email = email
-        self.name = name
-        self.gender = gender
-        date_object = datetime.strptime(dob, '%d-%m-%Y').date()  # converting a date string to date object. See format
-        self.dob = date_object
-        self.age = self.age_calculator()
-        self.weight = weight
-        self.height = height
+    def edit_details(self, current_user, username, name, dob, gender, weight, height, email):
+        session = make_session()  # we interact with db file in a session
+        edit_user = session.query(User).get(current_user)
+        edit_user.username = username
+        edit_user.email = email
+        edit_user.name = name
+        edit_user.gender = gender
+        date_object = datetime.strptime(dob, '%d/%m/%Y').date()  # converting a date string to date object. See format
+        edit_user.dob = date_object
+        edit_user.age = edit_user.age_calculator()
+        edit_user.weight = weight
+        edit_user.height = height
 
         session.commit()  # need to commit for changes to appear in database
         session.close()

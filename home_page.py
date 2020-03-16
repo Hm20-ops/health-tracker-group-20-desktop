@@ -11,7 +11,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 import icons_rc
 
 class Ui_Health_tracker(object):
-    def setupUi(self, Health_tracker, basic_goals):
+    def setupUi(self, Health_tracker, basic_goals=None):
         Health_tracker.setObjectName("Health_tracker")
         Health_tracker.resize(1145, 868)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
