@@ -51,6 +51,8 @@ class RegisterPresenter:
         # obtain all information inputted on the view
         name = self._view.name.text()
         gender = self._view.gender.currentText().lower()
+        if gender == 'prefer not to say':
+            gender = 'other'
         dob = self._view.dob.text()
         username = self._view.username.text()
         password = self._view.password.text()
