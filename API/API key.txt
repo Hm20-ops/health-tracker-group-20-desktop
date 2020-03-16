@@ -1,0 +1,9 @@
+Your OAuth 2.0 Client Secret is: 94b50f945b5e400bac3a56fae13dffdc
+Your Client ID:
+8098a0e2dc684c9abbeff09aeba903d1
+Your Client Secret:
+94b50f945b5e400bac3a56fae13dffdc
+Your Consumer Key:
+8098a0e2dc684c9abbeff09aeba903d1
+Your Consumer Secret:
+403bc461fe69402aad8589edf4e830c3
