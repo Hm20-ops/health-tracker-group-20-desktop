@@ -20,13 +20,12 @@ def display_message(title, text, error=True):
 A helper function to send email to an email address, that is used for when creating account 
 and invite a user to a group and notify group members of archiving group goal or a new group goal
 '''
-def send_email_to(email_to):
+def send_email_to(email_to, title, message_text):
     email = 'emailforadvertsandtests@gmail.com'
     password = 'doonrkovjqdmmqow'
     send_to_email = email_to
-    subject = 'Verification needed to complete health tracker registration'  # The subject line
-    message = 'Thanks for registering. Please click the following link to complete the registration\n' \
-              'https://healthtracker.io/verify/325455632'
+    subject = title  # The subject line
+    message = message_text
 
     # creating the email instance(MIMEMultipart) and set header fields
     msg = MIMEMultipart()

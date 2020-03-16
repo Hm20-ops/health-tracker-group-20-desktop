@@ -126,78 +126,101 @@ class Ui_Home(object):
         self.verticalLayout_2.addWidget(self.day_streak)
 
         # box that contains calorie goal info
-        self.goal_tracker = QtWidgets.QGroupBox(self.daily_summary)
+        self.calorie_tracker = QtWidgets.QGroupBox(self.daily_summary)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(2)
-        sizePolicy.setHeightForWidth(self.goal_tracker.sizePolicy().hasHeightForWidth())
-        self.goal_tracker.setSizePolicy(sizePolicy)
-        self.goal_tracker.setStyleSheet("QGroupBox{\n"
-                                        "background: rgb(222, 222, 222); \n"
-                                        "color:rgb(122, 122, 122);\n"
-                                        "}")
-        self.goal_tracker.setTitle("")
-        self.goal_tracker.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
-        self.goal_tracker.setCheckable(False)
-        self.goal_tracker.setObjectName("goal_tracker")
-        self.gridLayout_4 = QtWidgets.QGridLayout(self.goal_tracker)
+        sizePolicy.setHeightForWidth(self.calorie_tracker.sizePolicy().hasHeightForWidth())
+        self.calorie_tracker.setSizePolicy(sizePolicy)
+        self.calorie_tracker.setStyleSheet("QGroupBox{\n"
+                                           "background: rgb(222, 222, 222); \n"
+                                           "color:rgb(122, 122, 122);\n"
+                                           "\n"
+                                           "\n"
+                                           "}")
+        self.calorie_tracker.setTitle("")
+        self.calorie_tracker.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
+        self.calorie_tracker.setCheckable(False)
+        self.calorie_tracker.setObjectName("calorie_tracker")
+        self.gridLayout_4 = QtWidgets.QGridLayout(self.calorie_tracker)
         self.gridLayout_4.setObjectName("gridLayout_4")
-        self.calorine_progress = QtWidgets.QProgressBar(self.goal_tracker)
+        self.food_label = QtWidgets.QLabel(self.calorie_tracker)
+        font = QtGui.QFont()
+        font.setPointSize(20)
+        self.food_label.setFont(font)
+        self.food_label.setStyleSheet("background: none;")
+        self.food_label.setWordWrap(False)
+        self.food_label.setObjectName("food_label")
+        self.gridLayout_4.addWidget(self.food_label, 0, 5, 1, 2, QtCore.Qt.AlignRight)
+        self.food = QtWidgets.QLCDNumber(self.calorie_tracker)
+        self.food.setStyleSheet("QLCDNumber{\n"
+                                "background:rgb(222, 222, 222); \n"
+                                "color:rgb(62, 62, 62);\n"
+                                "border: none;\n"
+                                "\n"
+                                "}")
+        self.food.setProperty("intValue", 0)
+        self.food.setObjectName("food")
+        self.gridLayout_4.addWidget(self.food, 1, 6, 1, 1, QtCore.Qt.AlignHCenter)
+        self.exercise_label = QtWidgets.QLabel(self.calorie_tracker)
+        font = QtGui.QFont()
+        font.setPointSize(20)
+        self.exercise_label.setFont(font)
+        self.exercise_label.setStyleSheet("background: none;")
+        self.exercise_label.setWordWrap(False)
+        self.exercise_label.setObjectName("exercise_label")
+        self.gridLayout_4.addWidget(self.exercise_label, 0, 7, 1, 1, QtCore.Qt.AlignRight)
+        self.net_calorie_label = QtWidgets.QLabel(self.calorie_tracker)
+        font = QtGui.QFont()
+        font.setPointSize(20)
+        self.net_calorie_label.setFont(font)
+        self.net_calorie_label.setStyleSheet("background: none;")
+        self.net_calorie_label.setWordWrap(False)
+        self.net_calorie_label.setObjectName("net_calorie_label")
+        self.gridLayout_4.addWidget(self.net_calorie_label, 0, 8, 1, 1, QtCore.Qt.AlignHCenter)
+        self.exercise = QtWidgets.QLCDNumber(self.calorie_tracker)
+        self.exercise.setStyleSheet("QLCDNumber{\n"
+                                    "background:rgb(222, 222, 222); \n"
+                                    "color:rgb(62, 62, 62);\n"
+                                    "border: none;\n"
+                                    "\n"
+                                    "}")
+        self.exercise.setProperty("intValue", 0)
+        self.exercise.setObjectName("exercise")
+        self.gridLayout_4.addWidget(self.exercise, 1, 7, 1, 1, QtCore.Qt.AlignHCenter)
+        self.calorine_progress = QtWidgets.QProgressBar(self.calorie_tracker)
         self.calorine_progress.setStyleSheet("QProgressBar::chunk {\n"
                                              "     background-color: #3add36;\n"
                                              "     width: 1px;\n"
                                              " }\n"
                                              "\n"
                                              " QProgressBar {\n"
+                                             "     \n"
                                              "     border-radius: 0px;\n"
                                              "     text-align: center;\n"
                                              " }")
         self.calorine_progress.setProperty("value", 0)
         self.calorine_progress.setObjectName("calorine_progress")
-        self.gridLayout_4.addWidget(self.calorine_progress, 2, 0, 1, 5)
-        self.calorie_left_label = QtWidgets.QLabel(self.goal_tracker)
-        font = QtGui.QFont()
-        font.setPointSize(20)
-        self.calorie_left_label.setFont(font)
-        self.calorie_left_label.setStyleSheet("background: none;")
-        self.calorie_left_label.setWordWrap(False)
-        self.calorie_left_label.setObjectName("calorie_left_label")
-        self.gridLayout_4.addWidget(self.calorie_left_label, 0, 4, 1, 1)
-        self.calorie_left = QtWidgets.QLCDNumber(self.goal_tracker)
-        self.calorie_left.setStyleSheet("QLCDNumber{\n"
-                                        "background:rgb(222, 222, 222); \n"
-                                        "color:rgb(62, 62, 62);\n"
-                                        "border: none;\n"
-                                        "}")
-        self.calorie_left.setProperty("intValue", 500)
-        self.calorie_left.setObjectName("calorie_left")
-        self.gridLayout_4.addWidget(self.calorie_left, 1, 4, 1, 1)
-        self.calorine_line = QtWidgets.QFrame(self.goal_tracker)
-        self.calorine_line.setFrameShape(QtWidgets.QFrame.VLine)
-        self.calorine_line.setFrameShadow(QtWidgets.QFrame.Sunken)
-        self.calorine_line.setObjectName("calorine_line")
-        self.gridLayout_4.addWidget(self.calorine_line, 0, 3, 1, 1)
-        self.calorie_goal_label = QtWidgets.QLabel(self.goal_tracker)
-        font = QtGui.QFont()
-        font.setPointSize(20)
-        self.calorie_goal_label.setFont(font)
-        self.calorie_goal_label.setStyleSheet("background: none;")
-        self.calorie_goal_label.setWordWrap(False)
-        self.calorie_goal_label.setObjectName("calorie_goal_label")
-        self.gridLayout_4.addWidget(self.calorie_goal_label, 0, 2, 1, 1)
-        self.calorie_goal = QtWidgets.QLCDNumber(self.goal_tracker)
-        font = QtGui.QFont()
-        font.setPointSize(7)
-        self.calorie_goal.setFont(font)
-        self.calorie_goal.setStyleSheet("QLCDNumber{\n"
-                                        "background:rgb(222, 222, 222); \n"
-                                        "color:rgb(62, 62, 62);\n"
-                                        "border: none;\n"
-                                        "}")
-        self.calorie_goal.setProperty("intValue", 2000)
-        self.calorie_goal.setObjectName("calorie_goal")
-        self.gridLayout_4.addWidget(self.calorie_goal, 1, 2, 1, 1)
-        self.verticalLayout_2.addWidget(self.goal_tracker)
+        self.gridLayout_4.addWidget(self.calorine_progress, 2, 0, 1, 9)
+        self.net_calorie = QtWidgets.QLCDNumber(self.calorie_tracker)
+        self.net_calorie.setStyleSheet("QLCDNumber{\n"
+                                       "background:rgb(222, 222, 222); \n"
+                                       "color:rgb(62, 62, 62);\n"
+                                       "border: none;\n"
+                                       "\n"
+                                       "}")
+        self.net_calorie.setProperty("intValue", 0)
+        self.net_calorie.setObjectName("net_calorie")
+        self.gridLayout_4.addWidget(self.net_calorie, 1, 8, 1, 1, QtCore.Qt.AlignHCenter)
+        self.line = QtWidgets.QFrame(self.calorie_tracker)
+        self.line.setEnabled(True)
+        self.line.setStyleSheet("background: none;")
+        self.line.setLineWidth(0)
+        self.line.setFrameShape(QtWidgets.QFrame.VLine)
+        self.line.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.line.setObjectName("line")
+        self.gridLayout_4.addWidget(self.line, 0, 4, 1, 1)
+        self.verticalLayout_2.addWidget(self.calorie_tracker)
         self.button_frame = QtWidgets.QFrame(self.daily_summary)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
@@ -304,10 +327,9 @@ class Ui_Home(object):
         self.header.setText(_translate("Home",
                                        "<html><head/><body><p><span style=\" font-family:\'Segoe UI\'; font-size:36pt;\">      Daily Summary</span></p></body></html>"))
         self.day_streak.setText(_translate("Home", "Day Streak 1"))
-        self.calorie_left_label.setText(
-            _translate("Home", "<html><head/><body><p align=\"center\">Calories Left</p></body></html>"))
-        self.calorie_goal_label.setText(
-            _translate("Home", "<html><head/><body><p align=\"center\">Calories Goal</p></body></html>"))
+        self.food_label.setText(_translate("Home", "Food  - "))
+        self.exercise_label.setText(_translate("Home", "Exercise ="))
+        self.net_calorie_label.setText(_translate("Home", "net calorie"))
         self.add_exercise.setText(_translate("Home", "Add Exercise"))
         self.add_diet.setText(_translate("Home", "Add Diet"))
         self.add_weight.setText(_translate("Home", "Add Weight"))
