@@ -12,9 +12,6 @@ from sqlalchemy.orm import sessionmaker
 
 from ModelHandler import *
 
-# Base = declarative_base()
-# engine = create_engine('sqlite:///User.db', echo=True)
-
 
 class User(Base):
     __tablename__ = "User"
@@ -57,18 +54,6 @@ class User(Base):
         session.close()
         return user
 
-    def create_group(self):
-        # Create a new group
-        group_goal = None
-        group = Group('name', 'OPEN', [self], [self], group_goal)
-        self.__groups.append(group)
-
-    def join_group(self, id):
-        pass
-
-    def leave_group(self):
-        pass
-
     def edit_details(self, current_user, username, name, dob, gender, weight, height, email):
         session = make_session()  # we interact with db file in a session
         edit_user = session.query(User).get(current_user)
@@ -84,15 +69,6 @@ class User(Base):
 
         session.commit()  # need to commit for changes to appear in database
         session.close()
-
-    def create_goal(self):
-        pass
-
-    def create_exercise(self):
-        pass
-
-    def create_diet(self):
-        pass
 
     def age_calculator(self):
         today = date.today()
