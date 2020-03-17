@@ -10,3 +10,4 @@ def make_session():
     Session = sessionmaker(bind=engine)
     session = Session()
     return session
+

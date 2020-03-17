@@ -11,13 +11,13 @@ from PyQt5.QtCore import Qt, QAbstractTableModel, QModelIndex
 from PyQt5.QtGui import QColor
 
 
-class CustomTableModel(QAbstractTableModel):
+class CustomTableModel(QAbstractTableModel):#custom table for loading model
     def __init__(self, data=None):
-        QAbstractTableModel.__init__(self)
+        QAbstractTableModel.__init__(self)#inherit from QAbstractModel
         self.load_data(data)
 
     def load_data(self, data):
-        self.column_count = 2
+        self.column_count = 2#specify number of columns to display exercise name and MET value
         self.row_count = len(data)
         self.myModel=data
     def rowCount(self, parent=QModelIndex()):
@@ -36,7 +36,7 @@ class CustomTableModel(QAbstractTableModel):
 
     def data(self, index, role=Qt.DisplayRole):
         #print(self.myModel[index.row()][index.column()])#not getting here
-        if role == Qt.DisplayRole:
+        if role == Qt.DisplayRole:#Qt.DisplayRole defines behaviour of an element in the table
             return self.myModel[index.row()][index.column()]
 
         elif role == Qt.BackgroundRole:
@@ -56,28 +56,27 @@ class SortFilterProxyModel(QtCore.QSortFilterProxyModel):
 class Controller:
     def __init__(self):
         self.data = self.read_data()
-        self._app = QApplication(sys.argv)#might break here to check
+        self._app = QApplication(sys.argv)
 
 
         self.exercise = QtWidgets.QWidget()
         self.ui = Ui_exercise_page()
-        self.ui.setupUi(self.exercise)
+        self.ui.setupUi(self.exercise)#pass the diet widget to the ui
 
 
-        self.proxyModel = SortFilterProxyModel()
+        self.proxyModel = SortFilterProxyModel()#make a proxy model object
         self.model = CustomTableModel(self.data)
         self.proxyModel.setSourceModel(self.model)
 
 
-        self.ui.exercise_table.setModel(self.proxyModel)
-        self.checkExerciseSearch()
-        self.ui.exercise_table.clicked.connect(self.displayInQlineEdit)
-        self.ui.duration_input.textEdited.connect(self.getCaloricInformation)
-        self.ui.add_exercise_3.clicked.connect(self.addNewExercise)
+        self.ui.exercise_table.setModel(self.proxyModel)#At initialisation, the proxyModel is the model itself
+        self.checkExerciseSearch()#method for searching the database
+        self.ui.exercise_table.clicked.connect(self.displayInQlineEdit)#method for displaying text when row is clicked
+        self.ui.duration_input.textEdited.connect(self.getCaloricInformation)#method for editing calorific value when duration changes
+        self.ui.add_exercise_3.clicked.connect(self.addNewExercise)#add new exercise to the database
 
     def read_data(self):
-        # Read the CSV content
-        data=make_session().query(ExerciseDictionary).all()
+        data=make_session().query(ExerciseDictionary).all()#query ExerciseDictionary to fetch all rows
         tableData=[]
         for x in range(0,len(data)):
             dictionary=data[x]
@@ -85,15 +84,15 @@ class Controller:
         return tableData
 
     def displayInQlineEdit(self):
-         index = self.ui.exercise_table.currentIndex()
+         index = self.ui.exercise_table.currentIndex()#fetched index of row currently selected in the table
          exerciseName = self.ui.exercise_table.model().index(index.row(), 0)
          metValue = self.ui.exercise_table.model().index(index.row(), 1)
-         self.ui.exerciseName_2.setText(exerciseName.data())
+         self.ui.exerciseName_2.setText(exerciseName.data())#display selected exercise name
          self.ui.duration_input.setText("60")
-         self.ui.add_calories_2.setText(str(metValue.data()))
+         self.ui.add_calories_2.setText(str(metValue.data()))#display calorie
 
     def checkExerciseSearch(self):
-        self.ui.search_input.textEdited.connect(self.filterRegExpChanged)
+        self.ui.search_input.textEdited.connect(self.filterRegExpChanged)#signal to filter table based on search query
 
 
     def filterRegExpChanged(self):
@@ -106,25 +105,27 @@ class Controller:
     def getCaloricInformation(self):
         index = self.ui.exercise_table.currentIndex()
         session=make_session()
-        metValue=(session.query(ExerciseDictionary).get(index.row()+1).metValue)
+        metValue=(session.query(ExerciseDictionary).get(index.row()+1).metValue)#for an index in table, query correspoding MET
         try:
+            #TODO fetch username passed as argument
+            # Show a label if an input is not allowed
             userInfo=session.query(User).filter(User.username=='Munbodh21')
             userWeight=userInfo[0].weight
+
             duration=float(self.ui.duration_input.text())
+
             caloriesBurnt=(duration/60)*metValue*userWeight
-            precision=Decimal('0.01')
+            precision=Decimal('0.01')#rounding of caloriesBurnt to 2 d.p
             caloriesBurnt=Decimal(caloriesBurnt).quantize(precision)
-            print(caloriesBurnt)
             self.ui.add_calories_2.setText(str(caloriesBurnt))
         except Exception as e:
             self.ui.add_calories_2.setText(str(0))
             print(e)
 
-        #self.__ui.lineEdit_3.setText(str(50))
-        #self.__ui.lineEdit_3.setText(str(round((float(self.__ui.lineEdit_3.text())/100)*float(self.__ui.lineEdit_2.text()),3)))
-
     def addNewExercise(self):
-        if(self.ui.durationLineEdit_5.text()=='' or self.ui.add_calories.text()==''):
+        if(self.ui.durationLineEdit_5.text()=='' or self.ui.add_calories.text()==''):#disallow adding food with empty text
+            #TODO to be printed in the GUI as a label
+            # Find a more efficient way to refresh page after model is updated
             print('not allowed')
         else:
             exerciseName=self.ui.durationLineEdit_5.text()
@@ -133,11 +134,10 @@ class Controller:
                 activity=None
                 ExerciseDictionary.addExercise(activity,exerciseName,calories)
                 self.data = self.read_data()
-                self.model = CustomTableModel(self.data)
-                self.proxyModel.setSourceModel(self.model)
+                self.model = CustomTableModel(self.data)#reset model
+                self.proxyModel.setSourceModel(self.model)#display added food without a need for refreshing
                 self.ui.exercise_table.setModel(self.proxyModel)
             except Exception as e:
-                print('hello')
                 print(e)
 
     def run(self):
