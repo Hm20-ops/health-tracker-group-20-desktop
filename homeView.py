@@ -432,10 +432,9 @@ class PlotCanvas(FigureCanvas):
 
     def plot(self):
         # import random
-        data = [65, 64.9, 64.6, 64.5, 64.5, 64, 63.67, 62.34, 61, 60, 60, 60, 59.8, 59,
-                58.7]  # [random.random() for i in range(25)]
+        data = [65, 64.9, 64.6, 64.5, 64.5, 64.3, 64.2]  # [random.random() for i in range(25)]
         ax = self.figure.add_subplot(111)
         ax.plot(data, 'r-')
         ax.set_title('Weight trend')
-        plt.setp(ax, xlabel='Day', ylabel='Weight')
+        plt.setp(ax, xlabel='Day', ylabel='Weight(kg)')
         self.draw()
