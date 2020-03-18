@@ -1,9 +1,8 @@
 import sys
-from Diet import *
 import RegisterPresenter
 from mainView import Ui_Health_tracker
 from PyQt5.QtCore import pyqtSlot
-from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox, QListWidgetItem
+from PyQt5.QtWidgets import QMainWindow, QApplication, QListWidgetItem
 from homePresenter import homePresenter
 from profilePresenter import profilePresenter
 from goalPresenter import goalPresenter
@@ -19,7 +18,6 @@ that governs the display of pages and switching controllers
 class MainPresenter:
     def __init__(self, username):
         self._redirect_to = None
-        self._user_model = User.User()
         self._user = username
 
         self._view = MainWindow()
@@ -28,7 +26,6 @@ class MainPresenter:
 
         self._view.side_nav_bar.setCurrentItem(QListWidgetItem(" Home"))
         self.view_page.addWidget(self.home())
-        #self.view_page.setCurrentWidget(self.home())
         self._view.show()
 
     @pyqtSlot()

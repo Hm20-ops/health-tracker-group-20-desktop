@@ -15,7 +15,7 @@ class goalPresenter:
 		self._user = username
 		# get all models required
 		self._basic_goal_model = BasicGoal()
-		self._user_custom_goal_model = UserCustomGoal()
+		self._user_custom_goal_model = CustomGoal()
 
 		# get data from model, functions that do basic conventional stuff(CRUD)
 		# can be written in model and call here, u can directly query here for more complex actions

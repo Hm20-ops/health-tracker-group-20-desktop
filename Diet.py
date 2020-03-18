@@ -13,13 +13,6 @@ class Drink(Base):
     name = Column(String, nullable=False)
 
 
-class Food(Base):
-    __tablename__ = 'Food'
-
-    id = Column(Integer, primary_key=True)
-    name = Column(String, nullable=False)
-
-
 class UserMeal(Base):
     __tablename__ = 'UserMeal'
 
@@ -56,11 +49,11 @@ class FoodConsumed(Base):
 
     username = Column(ForeignKey('UserMeal.username', ondelete='CASCADE', onupdate='CASCADE'), primary_key=True, nullable=False)
     meal_id = Column(ForeignKey('UserMeal.meal_id', ondelete='CASCADE'), primary_key=True, nullable=False)
-    food_id = Column(ForeignKey('Food.id', ondelete='RESTRICT'), nullable=False)
+    food_id = Column(ForeignKey('FoodDictionary.foodId', ondelete='RESTRICT'), nullable=False)
     quantity = Column(Integer, nullable=False)
 
     # foreign keys definitions
-    food = relationship('Food')
+    food = relationship('FoodDictionary')
     meal = relationship('UserMeal', primaryjoin='FoodConsumed.meal_id == UserMeal.meal_id')
     UserMeal = relationship('UserMeal', primaryjoin='FoodConsumed.username == UserMeal.username')
 
