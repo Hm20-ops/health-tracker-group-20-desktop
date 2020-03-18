@@ -17,6 +17,23 @@ class FoodDictionary(Base):
         session.add(addFood)
         session.commit()
         session.close()
+
+    @staticmethod
+    def get_all_food():
+        session = make_session()
+        #query FoodDictionary to fetch all rows
+        data = session.query(FoodDictionary)\
+                      .with_entities(FoodDictionary.foodName, FoodDictionary.calories).all()
+        session.close()
+        return data
+
+
+    def get(self, index):
+        session = make_session()
+        food = session.query(FoodDictionary).get(index)  # for an index in table, query correspoding baseCalorie
+        session.close()
+        return food
+
 if __name__=="__main__":
     Base.metadata.create_all(engine)
 

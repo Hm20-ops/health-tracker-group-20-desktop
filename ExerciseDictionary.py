@@ -17,7 +17,19 @@ class ExerciseDictionary(Base):
         session.commit()
         session.close()
 
+    def get_all_exercises(self):
+        session = make_session()
+        data = session.query(ExerciseDictionary)\
+                      .with_entities(ExerciseDictionary.specificMotion, ExerciseDictionary.metValue).all()
 
+        session.close()
+        return data
+
+    def get(self, index):
+        session = make_session()
+        food = session.query(ExerciseDictionary).get(index)  # for an index in table, query correspoding baseCalorie
+        session.close()
+        return food
 
 
 

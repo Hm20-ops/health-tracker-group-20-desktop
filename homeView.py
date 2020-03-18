@@ -14,10 +14,10 @@ import matplotlib.pyplot as plt
 
 
 class Ui_Home(object):
-    def __init__(self, parent, goals):
-        self.setupUi(parent, goals)
+    def __init__(self, parent, goals, data):
+        self.setupUi(parent, goals, data)
 
-    def setupUi(self, Home, goals):
+    def setupUi(self, Home, goals, data):
         Home.setObjectName("Home")
         Home.resize(1500, 794)
         self.verticalLayout_3 = QtWidgets.QVBoxLayout(Home)
@@ -271,7 +271,7 @@ class Ui_Home(object):
         self.verticalLayout_2.addWidget(self.button_frame)
 
         # show graph
-        self.graph = PlotCanvas(self.daily_summary)
+        self.graph = PlotCanvas(self.daily_summary, data)
 
         self.verticalLayout_2.addWidget(self.graph)
         self.verticalLayout.addWidget(self.daily_summary)
@@ -417,12 +417,12 @@ a canvas class for displaying the graph
 '''
 
 class PlotCanvas(FigureCanvas):
-    def __init__(self, parent=None, width=5, height=4, dpi=100):
+    def __init__(self,  parent=None, data=[],width=5, height=4, dpi=100):
         fig = Figure(figsize=(width, height), dpi=dpi)
 
         FigureCanvas.__init__(self, fig)
         self.setParent(parent)
-
+        self.data = data
 
         FigureCanvas.setSizePolicy(self,
                                    QtWidgets.QSizePolicy.MinimumExpanding,
@@ -432,9 +432,9 @@ class PlotCanvas(FigureCanvas):
 
     def plot(self):
         # import random
-        data = [65, 64.9, 64.6, 64.5, 64.5, 64.3, 64.2]  # [random.random() for i in range(25)]
+        # data = [65, 64.9, 64.6, 64.5, 64.5, 64.3, 64.2]  # [random.random() for i in range(25)]
         ax = self.figure.add_subplot(111)
-        ax.plot(data, 'r-')
+        ax.plot(self.data, 'r-')
         ax.set_title('Weight trend')
         plt.setp(ax, xlabel='Day', ylabel='Weight(kg)')
         self.draw()

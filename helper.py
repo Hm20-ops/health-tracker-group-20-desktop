@@ -10,8 +10,8 @@ give success information to user
 def display_message(title, text, error=True):
     msg = QMessageBox()
     msg_type = QMessageBox.Critical if error else QMessageBox.Information
-    msg.setWindowTitle(title)
-    msg.setText(text)
+    msg.setWindowTitle(f'{title}')
+    msg.setText(f'{text}')
     msg.setIcon(msg_type)
     msg.setStandardButtons(QMessageBox.Ok)
     msg.exec_()

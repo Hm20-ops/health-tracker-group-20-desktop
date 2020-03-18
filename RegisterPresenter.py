@@ -47,22 +47,21 @@ class RegisterPresenter:
                 display_message('Invalid input data', error_message)
             return valid
 
-        print('adding user')
-        # obtain all information inputted on the view
-        name = self._view.name.text()
-        gender = self._view.gender.currentText().lower()
-        if gender == 'prefer not to say':
-            gender = 'other'
-        dob = self._view.dob.text()
-        username = self._view.username.text()
-        password = self._view.password.text()
-        email = self._view.email.text()
-        height = int(self._view.height.text())
-        weight = int(self._view.weight.text())
-        print(username, email, password, name, dob, weight, height, gender)
-
         # try to add new user to database
         try:
+            print('adding user')
+            # obtain all information inputted on the view
+            name = self._view.name.text()
+            gender = self._view.gender.currentText().lower()
+            if gender == 'prefer not to say':
+                gender = 'other'
+            dob = self._view.dob.text()
+            username = self._view.username.text()
+            password = self._view.password.text()
+            email = self._view.email.text()
+            height = int(self._view.height.text())
+            weight = int(self._view.weight.text())
+            print(username, email, password, name, dob, weight, height, gender)
             if not _add_validation():
                 return
             # ask model to create a new user
@@ -79,7 +78,7 @@ class RegisterPresenter:
             print(e)
             # display error message
             display_message("Error creating user!",
-                            "Please check if you enter a valid data!")
+                            "Please check if you enter valid data!")
 
     '''
     function to login to the home screen of the program with the input username and password on the view

@@ -11,8 +11,10 @@ from ExercisePresenter import ExercisePresenter
 from Group import Group
 from Diet import *
 import RegisterPresenter
+from helper import display_message
 from mainView import Ui_Health_tracker
-from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox
+from PyQt5 import QtWidgets
+from PyQt5.QtWidgets import QInputDialog
 from homeView import Ui_Home
 import CustomGoal
 
@@ -25,7 +27,8 @@ class homePresenter:
 		# self._basic_goal_model = BasicGoal()
 		self._custom_goal_model = CustomGoal.UserCustomGoal()
 		goals = self._custom_goal_model.get_recent(username)
-		self._view = Ui_Home(parent, goals)
+		self.data = [65, 64.9, 64.6, 64.5, 64.5, 64.3, 64.2]
+		self._view = Ui_Home(parent, goals, self.data)
 		self._view.add_exercise.clicked.connect(lambda: self.to_exercise())
 		self._view.add_diet.clicked.connect(lambda: self.to_diet())
 		self._view.add_weight.clicked.connect(lambda: self.update_weight())
@@ -43,7 +46,15 @@ class homePresenter:
 		return redirect
 
 	def update_weight(self):
-		return
+		num, ok = QInputDialog.getDouble(self.page(), "update weight", "Enter your new weight", 65, 60, 80)
+
+		if ok:
+			self.data.append(num)
+			self._user_model.update_weight(self._user, num)
+			self.parent.update()
+
+			display_message('Weight added successfully', f'Good work! You are now {num} kg', False)
+		# return
 
 	def page(self):
 		return self._view.scrollArea

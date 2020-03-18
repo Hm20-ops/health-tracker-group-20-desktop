@@ -29,7 +29,7 @@ class CustomTableModel(QAbstractTableModel):#custom table for loading model
         if orientation == Qt.Horizontal:
             return ("Food Name", "Calories")[section]
         else:
-            return "{}".format(section)
+            return f"{section}"
 
     def data(self, index, role=Qt.DisplayRole):
         if role == Qt.DisplayRole:#Qt.DisplayRole defines behaviour of an element in the table
@@ -51,10 +51,10 @@ class SortFilterProxyModel(QtCore.QSortFilterProxyModel):
 
 class DietPresenter:
     def __init__(self, parent, username):
-        self.data = self.read_data()
         self._user = username
+        self._food_model = FoodDictionary()
 
-
+        self.data = self._food_model.get_all_food()
         self.proxyModel = SortFilterProxyModel()#make a proxy model object
         self.model = CustomTableModel(self.data)
         self.proxyModel.setSourceModel(self.model)
@@ -65,17 +65,6 @@ class DietPresenter:
         self.ui.food_database.clicked.connect(partial(self.displayInQlineEdit))#method for displaying text when row is clicked
         self.ui.portion_input.textEdited.connect(partial(self.getCaloricInformation))#method for editing calorific value when portion changes
         self.ui.add_food.clicked.connect(partial(self.addNewFood))#method to add new food to database
-
-    def read_data(self):
-        data=make_session().query(FoodDictionary).all()#query FoodDictionary to fetch all rows
-        tableData=[]
-        '''
-        Storing result of queries in suitable format to be displayed by table
-        '''
-        for x in range(0,len(data)):
-            dictionary=data[x]
-            tableData.append((dictionary.foodName,dictionary.calories))
-        return tableData
 
     def displayInQlineEdit(self):
          index = self.ui.food_database.currentIndex()#fetched index of row currently selected in the table
@@ -97,22 +86,22 @@ class DietPresenter:
         self.proxyModel.setFilterRegExp(regExp)
 
     def getCaloricInformation(self):
-        index = self.ui.food_database.currentIndex()
-        session=make_session()
-        baseCalorie=(session.query(FoodDictionary).get(index.row()+1).calories)#for an index in table, query correspoding baseCalorie
-        session.close()
+        index = self.ui.food_database.currentIndex().row() + 1
+        baseCalorie = float(self._food_model.get(index).calories)
+        calorieIntake = 0
         try:
             # TODO fetch username passed as argument
             # Show a label if an input is not allowed
-            '''
-            calorieIntake=(portion in gram input/100g)*baseCalorie
-            display calorieIntake
-            '''
-            self.ui.calories_output.setText(str(round((float(self.ui.portion_input.text())/100)*float(baseCalorie),3)))
+            # calorieIntake=(portion in gram input/100g)*baseCalorie
+            portion = float(self.ui.portion_input.text())/100
+            calorieIntake = round(portion * baseCalorie, 3)
+            #self.ui.calories_output.setText(str(round((float(self.ui.portion_input.text())/100)*float(baseCalorie),3)))
         except Exception as e:
-            #if input is empty. Display 0
-            self.ui.calories_output.setText(str(0))
+            # display_message('Invalid portion input', 'Please enter a valid portion per 100 g!') #if input is empty or invalid. Display 0
+            # self.ui.portion_input.setText('0')
             print(e)#display exception on console for debugging
+        finally:
+            self.ui.calories_output.setText(f'{calorieIntake}') # display calorieIntake
 
     def addNewFood(self):
         if(self.ui.name_input.text()=='' or self.ui.calories_input.text()==''):#disallow adding food with empty text
@@ -123,11 +112,14 @@ class DietPresenter:
             calories=self.ui.calories_input.text()
             try:
                 FoodDictionary.addFood(foodName,calories)
-                self.data = self.read_data()
+                self.data = self._food_model.get_all_food()
                 self.model = CustomTableModel(self.data)#reset model
                 self.proxyModel.setSourceModel(self.model)#display added food without a need for refreshing
                 self.ui.food_database.setModel(self.proxyModel)
+                display_message('New food added', 'You have added a new food successfully', False)
             except Exception as e:
+                display_message('Invalid portion input',
+                                'Please enter a valid portion per 100 g!')  # if input is empty or invalid. Display 0
                 print(e)
 
     def page(self):

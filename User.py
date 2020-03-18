@@ -70,6 +70,14 @@ class User(Base):
         session.commit()  # need to commit for changes to appear in database
         session.close()
 
+    def update_weight(self, username, weight):
+        session = make_session()
+        #update(User).where(User.username == username).values(weight=weight)
+        user = session.query(User).get(username)
+        user.weight = weight
+        session.commit()
+        session.close()
+
     def age_calculator(self):
         today = date.today()
         age = today.year - self.dob.year -((today.month, today.day) <(self.dob.month, self.dob.day))

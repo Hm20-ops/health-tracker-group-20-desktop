@@ -11,6 +11,8 @@ from ExerciseView import Ui_exercise_page
 from PyQt5.QtCore import Qt, QAbstractTableModel, QModelIndex
 from PyQt5.QtGui import QColor
 
+from helper import display_message
+
 
 class CustomTableModel(QAbstractTableModel):#custom table for loading model
     def __init__(self, data=None):
@@ -56,9 +58,11 @@ class SortFilterProxyModel(QtCore.QSortFilterProxyModel):
 
 class ExercisePresenter:
     def __init__(self, parent, username):
-        self.data = self.read_data()
         self._user = username
+        self._exercise_model = ExerciseDictionary()
+        self._user_model = User()
 
+        self.data = self._exercise_model.get_all_exercises()
         self.proxyModel = SortFilterProxyModel()#make a proxy model object
         self.model = CustomTableModel(self.data)
         self.proxyModel.setSourceModel(self.model)
@@ -70,13 +74,13 @@ class ExercisePresenter:
         self.ui.duration_input.textEdited.connect(partial(self.getCaloricInformation))#method for editing calorific value when duration changes
         self.ui.add_exercise_3.clicked.connect(partial(self.addNewExercise))#add new exercise to the database
 
-    def read_data(self):
-        data=make_session().query(ExerciseDictionary).all()#query ExerciseDictionary to fetch all rows
-        tableData=[]
-        for x in range(0,len(data)):
-            dictionary=data[x]
-            tableData.append((dictionary.specificMotion,dictionary.metValue))
-        return tableData
+    # def read_data(self):
+    #     data=make_session().query(ExerciseDictionary).all()#query ExerciseDictionary to fetch all rows
+    #     tableData=[]
+    #     for x in range(0,len(data)):
+    #         dictionary=data[x]
+    #         tableData.append((dictionary.specificMotion,dictionary.metValue))
+    #     return tableData
 
     def displayInQlineEdit(self):
          index = self.ui.exercise_table.currentIndex()#fetched index of row currently selected in the table
@@ -98,41 +102,50 @@ class ExercisePresenter:
         self.proxyModel.setFilterRegExp(regExp)
 
     def getCaloricInformation(self):
-        index = self.ui.exercise_table.currentIndex()
-        session=make_session()
-        metValue=(session.query(ExerciseDictionary).get(index.row()+1).metValue)#for an index in table, query correspoding MET
+        index = self.ui.exercise_table.currentIndex().row() + 1
+        # session=make_session()
+        # metValue=(session.query(ExerciseDictionary).get(index).metValue)#for an index in table, query correspoding MET
+        metValue = self._exercise_model.get(index).metValue
+        caloriesBurnt = 0
         try:
             #TODO fetch username passed as argument
             # Show a label if an input is not allowed
-            userInfo=session.query(User).filter(User.username=='Munbodh21')
-            userWeight=userInfo[0].weight
+            # userInfo=session.query(User).filter(User.username=='Munbodh21')
+            # userWeight=userInfo[0].weight
+            userInfo = self._user_model.get_user(self._user)
+            userWeight = userInfo.weight
 
             duration=float(self.ui.duration_input.text())
-
             caloriesBurnt=(duration/60)*metValue*userWeight
             precision=Decimal('0.01')#rounding of caloriesBurnt to 2 d.p
             caloriesBurnt=Decimal(caloriesBurnt).quantize(precision)
-            self.ui.add_calories_2.setText(str(caloriesBurnt))
+            #self.ui.add_calories_2.setText(str(caloriesBurnt))
         except Exception as e:
-            self.ui.add_calories_2.setText(str(0))
+            #self.ui.add_calories_2.setText(str(0))
             print(e)
+        finally:
+            self.ui.add_calories_2.setText(f'{caloriesBurnt}')
 
     def addNewExercise(self):
         if(self.ui.durationLineEdit_5.text()=='' or self.ui.add_calories.text()==''):#disallow adding food with empty text
             #TODO to be printed in the GUI as a label
             # Find a more efficient way to refresh page after model is updated
             print('not allowed')
+            display_message('Input cannot be empty', 'Please enter valid exercise duration and calories')
         else:
             exerciseName=self.ui.durationLineEdit_5.text()
             calories=self.ui.add_calories.text()
             try:
                 activity=None
                 ExerciseDictionary.addExercise(activity,exerciseName,calories)
-                self.data = self.read_data()
+                self.data = self._exercise_model.get_all_exercises()
                 self.model = CustomTableModel(self.data)#reset model
                 self.proxyModel.setSourceModel(self.model)#display added food without a need for refreshing
                 self.ui.exercise_table.setModel(self.proxyModel)
+                display_message('New exercise added', 'You have added a new exercise successfully', False)
             except Exception as e:
+                display_message('Invalid duration/calories input',
+                                'Please enter valid exercise duration and calories burnt!')
                 print(e)
 
     def page(self):
