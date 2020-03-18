@@ -1,12 +1,13 @@
 import sys
 from decimal import Decimal
+from functools import partial
 
 from PyQt5.QtWidgets import QApplication
 from qtpy import QtCore, QtWidgets
 from ModelHandler import make_session
 from ExerciseDictionary import ExerciseDictionary
 from User import User
-from exerciseView import Ui_exercise_page
+from ExerciseView import Ui_exercise_page
 from PyQt5.QtCore import Qt, QAbstractTableModel, QModelIndex
 from PyQt5.QtGui import QColor
 
@@ -53,27 +54,27 @@ class SortFilterProxyModel(QtCore.QSortFilterProxyModel):
         return super(SortFilterProxyModel, self).filterAcceptsRow(sourceRow, sourceParent)
 
 
-class Controller:
-    def __init__(self):
+class ExercisePresenter:
+    def __init__(self, parent, username):
         self.data = self.read_data()
-        self._app = QApplication(sys.argv)
+        self._user = username
 
 
-        self.exercise = QtWidgets.QWidget()
-        self.ui = Ui_exercise_page()
-        self.ui.setupUi(self.exercise)#pass the diet widget to the ui
+        #self.exercise = QtWidgets.QWidget()
+
+        #self.ui.setupUi(self.exercise)#pass the diet widget to the ui
 
 
         self.proxyModel = SortFilterProxyModel()#make a proxy model object
         self.model = CustomTableModel(self.data)
         self.proxyModel.setSourceModel(self.model)
 
-
+        self.ui = Ui_exercise_page(parent, self.proxyModel)
         self.ui.exercise_table.setModel(self.proxyModel)#At initialisation, the proxyModel is the model itself
         self.checkExerciseSearch()#method for searching the database
-        self.ui.exercise_table.clicked.connect(self.displayInQlineEdit)#method for displaying text when row is clicked
-        self.ui.duration_input.textEdited.connect(self.getCaloricInformation)#method for editing calorific value when duration changes
-        self.ui.add_exercise_3.clicked.connect(self.addNewExercise)#add new exercise to the database
+        self.ui.exercise_table.clicked.connect(partial(self.displayInQlineEdit))#method for displaying text when row is clicked
+        self.ui.duration_input.textEdited.connect(partial(self.getCaloricInformation))#method for editing calorific value when duration changes
+        self.ui.add_exercise_3.clicked.connect(partial(self.addNewExercise))#add new exercise to the database
 
     def read_data(self):
         data=make_session().query(ExerciseDictionary).all()#query ExerciseDictionary to fetch all rows
@@ -92,7 +93,7 @@ class Controller:
          self.ui.add_calories_2.setText(str(metValue.data()))#display calorie
 
     def checkExerciseSearch(self):
-        self.ui.search_input.textEdited.connect(self.filterRegExpChanged)#signal to filter table based on search query
+        self.ui.search_input.textEdited.connect(partial(self.filterRegExpChanged))#signal to filter table based on search query
 
 
     def filterRegExpChanged(self):
@@ -140,10 +141,14 @@ class Controller:
             except Exception as e:
                 print(e)
 
-    def run(self):
-        self.exercise.show()
-        return self._app.exec_()
+    def page(self):
+        return self.ui.scrollArea
+
+    # def run(self):
+    #     self.exercise.show()
+    #     return self._app.exec_()
 
 if __name__ == "__main__":
-    c=Controller()
-    sys.exit(c.run())
+    app = QtWidgets.QApplication(sys.argv)
+    c = ExercisePresenter(QtWidgets.QWidget(), '')
+    sys.exit(app.exec_())

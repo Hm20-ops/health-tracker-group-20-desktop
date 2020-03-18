@@ -26,8 +26,8 @@ class goalPresenter:
 		self._view = Ui_Goal(parent, user_goals)
 
 		# connect all signals to the functions in this presenter
-		self._view.add_basic_goal.clicked.connect(lambda: self.make_basic_goal)
-		self._view.add_custom_goal.clicked.connect(lambda: self.make_custom_goal)
+		self._view.add_basic_goal.clicked.connect(lambda: self.make_basic_goal())
+		self._view.add_custom_goal.clicked.connect(lambda: self.make_custom_goal())
 
 	def make_basic_goal(self):
 		# get data from the view
@@ -38,7 +38,7 @@ class goalPresenter:
 
 	def make_custom_goal(self):
 		# get data from the view
-		description = self._view.goal_description.text()
+		description = self._view.goal_description.toPlainText()
 		days = self._view.days.value()
 		period = self._view.period.value()
 		complete_date = self._view.completion_date.date()

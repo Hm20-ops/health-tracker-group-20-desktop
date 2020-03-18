@@ -9,91 +9,26 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_diet(object):
-    def setupUi(self, diet):
+    def __init__(self, diet, table):
+        self.setupUi(diet, table)
+
+    def setupUi(self, diet, table):
         diet.setObjectName("diet")
         diet.resize(1227, 873)
         self.horizontalLayout = QtWidgets.QHBoxLayout(diet)
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout.setSpacing(0)
         self.horizontalLayout.setObjectName("horizontalLayout")
-        self.side_nav_bar = QtWidgets.QListWidget(diet)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.side_nav_bar.sizePolicy().hasHeightForWidth())
-        self.side_nav_bar.setSizePolicy(sizePolicy)
-        self.side_nav_bar.setMinimumSize(QtCore.QSize(0, 0))
-        font = QtGui.QFont()
-        font.setPointSize(16)
-        self.side_nav_bar.setFont(font)
-        self.side_nav_bar.setStyleSheet("QListWidget{\n"
-"background: rgb(63, 63, 63); \n"
-"color:rgb(122, 122, 122);\n"
-"border: none;\n"
-"\n"
-"}\n"
-"QListWidget::item { \n"
-"margin: 10px;\n"
-"padding-top: 20px;\n"
-"padding-left: 40px;\n"
-"}\n"
-"QListWidget::item::icon { \n"
-"size: 10px;\n"
-"}\n"
-"")
-        self.side_nav_bar.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
-        self.side_nav_bar.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
-        self.side_nav_bar.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustToContents)
-        self.side_nav_bar.setAutoScroll(False)
-        self.side_nav_bar.setProperty("showDropIndicator", True)
-        self.side_nav_bar.setIconSize(QtCore.QSize(50, 30))
-        self.side_nav_bar.setObjectName("side_nav_bar")
-        item = QtWidgets.QListWidgetItem()
-        icon = QtGui.QIcon.fromTheme("sidebar_icon")
-        item.setIcon(icon)
-        self.side_nav_bar.addItem(item)
-        item = QtWidgets.QListWidgetItem()
-        icon = QtGui.QIcon.fromTheme("sidebar_icon")
-        item.setIcon(icon)
-        self.side_nav_bar.addItem(item)
-        item = QtWidgets.QListWidgetItem()
-        icon = QtGui.QIcon.fromTheme("sidebar_icon")
-        item.setIcon(icon)
-        self.side_nav_bar.addItem(item)
-        item = QtWidgets.QListWidgetItem()
-        icon = QtGui.QIcon.fromTheme("sidebar_icon")
-        item.setIcon(icon)
-        self.side_nav_bar.addItem(item)
-        item = QtWidgets.QListWidgetItem()
-        icon = QtGui.QIcon.fromTheme("sidebar_icon")
-        item.setIcon(icon)
-        self.side_nav_bar.addItem(item)
-        item = QtWidgets.QListWidgetItem()
-        icon = QtGui.QIcon.fromTheme("sidebar_icon")
-        item.setIcon(icon)
-        self.side_nav_bar.addItem(item)
-        item = QtWidgets.QListWidgetItem()
-        item.setTextAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignVCenter)
-        icon = QtGui.QIcon.fromTheme("sidebar_icon")
-        item.setIcon(icon)
-        brush = QtGui.QBrush(QtGui.QColor(0, 0, 0))
-        brush.setStyle(QtCore.Qt.NoBrush)
-        item.setBackground(brush)
-        brush = QtGui.QBrush(QtGui.QColor(184, 0, 0))
-        brush.setStyle(QtCore.Qt.NoBrush)
-        item.setForeground(brush)
-        self.side_nav_bar.addItem(item)
-        self.horizontalLayout.addWidget(self.side_nav_bar)
-        self.scrollArea_4 = QtWidgets.QScrollArea(diet)
-        self.scrollArea_4.setEnabled(True)
+        self.scrollArea = QtWidgets.QScrollArea(diet)
+        self.scrollArea.setEnabled(True)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(50)
         sizePolicy.setVerticalStretch(60)
-        sizePolicy.setHeightForWidth(self.scrollArea_4.sizePolicy().hasHeightForWidth())
-        self.scrollArea_4.setSizePolicy(sizePolicy)
-        self.scrollArea_4.setMinimumSize(QtCore.QSize(500, 0))
-        self.scrollArea_4.setWidgetResizable(True)
-        self.scrollArea_4.setObjectName("scrollArea_4")
+        sizePolicy.setHeightForWidth(self.scrollArea.sizePolicy().hasHeightForWidth())
+        self.scrollArea.setSizePolicy(sizePolicy)
+        self.scrollArea.setMinimumSize(QtCore.QSize(500, 0))
+        self.scrollArea.setWidgetResizable(True)
+        self.scrollArea.setObjectName("scrollArea_4")
         self.diet_scroll_bar = QtWidgets.QWidget()
         self.diet_scroll_bar.setGeometry(QtCore.QRect(0, -13, 1396, 858))
         self.diet_scroll_bar.setObjectName("diet_scroll_bar")
@@ -165,6 +100,11 @@ class Ui_diet(object):
         self.food_database.setFont(font)
         self.food_database.setStyleSheet("border: none;\n"
 "background-color: rgb(255, 255, 255);")
+        self.food_database.setModel(table)  # At initialisation, the proxyModel is the model itself
+        self.food_database.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
+        self.food_database.verticalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Interactive)
+        #self.food_database.horizontalHeader().setSectionResizeMode(0, QtWidgets.QHeaderView.ResizeToContents)
+        self.food_database.horizontalHeader().setSectionResizeMode(1, QtWidgets.QHeaderView.ResizeToContents)
         self.food_database.setObjectName("food_database")
         self.gridLayout_2.addWidget(self.food_database, 2, 0, 1, 2)
         self.search_food_2 = QtWidgets.QLineEdit(self.search_food)
@@ -326,8 +266,8 @@ class Ui_diet(object):
         self.horizontalLayout_27.addWidget(self.add_food_box)
         self.verticalLayout_25.addWidget(self.add_and_search_siet)
         self.horizontalLayout_16.addWidget(self.diet_content)
-        self.scrollArea_4.setWidget(self.diet_scroll_bar)
-        self.horizontalLayout.addWidget(self.scrollArea_4)
+        self.scrollArea.setWidget(self.diet_scroll_bar)
+        self.horizontalLayout.addWidget(self.scrollArea)
 
         self.retranslateUi(diet)
         QtCore.QMetaObject.connectSlotsByName(diet)
@@ -335,23 +275,6 @@ class Ui_diet(object):
     def retranslateUi(self, diet):
         _translate = QtCore.QCoreApplication.translate
         diet.setWindowTitle(_translate("diet", "Form"))
-        __sortingEnabled = self.side_nav_bar.isSortingEnabled()
-        self.side_nav_bar.setSortingEnabled(False)
-        item = self.side_nav_bar.item(0)
-        item.setText(_translate("diet", " Home"))
-        item = self.side_nav_bar.item(1)
-        item.setText(_translate("diet", " Profile"))
-        item = self.side_nav_bar.item(2)
-        item.setText(_translate("diet", " Goal"))
-        item = self.side_nav_bar.item(3)
-        item.setText(_translate("diet", " Exercise"))
-        item = self.side_nav_bar.item(4)
-        item.setText(_translate("diet", " Diet"))
-        item = self.side_nav_bar.item(5)
-        item.setText(_translate("diet", " Group"))
-        item = self.side_nav_bar.item(6)
-        item.setText(_translate("diet", " Log out"))
-        self.side_nav_bar.setSortingEnabled(__sortingEnabled)
         self.diet_headline.setText(_translate("diet", "<html><head/><body><p><span style=\" font-family:\'Segoe UI\'; font-size:36pt;\">Diet</span></p></body></html>"))
         self.search_food_2.setPlaceholderText(_translate("diet", "Search for food..."))
         self.select_food_label.setText(_translate("diet", "Select your food database by name"))

@@ -7,6 +7,8 @@ from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox, QListWidgetI
 from homePresenter import homePresenter
 from profilePresenter import profilePresenter
 from goalPresenter import goalPresenter
+from DietPresenter import DietPresenter
+from ExercisePresenter import ExercisePresenter
 
 nav_bar_map = ['HOME', 'PROFILE', 'GOAL', 'EXERCISE', 'DIET', 'GROUP', 'LOGOUT']
 
@@ -54,10 +56,10 @@ class MainPresenter:
         return goalPresenter(self.view_page, self._user).page()
 
     def exercise(self):
-        return
+        return ExercisePresenter(self.view_page, self._user).page()
 
     def diet(self):
-        return
+        return DietPresenter(self.view_page, self._user).page()
 
     def group(self):
         return

@@ -343,18 +343,19 @@ class Ui_Home(object):
 
 
     def display_recent_goals(self, goals):
-        if goals is None:
+        if len(goals) == 0:
             print('No goals set yet')
             no_goal_text = QtWidgets.QLabel(self.goals_frame)
             no_goal_text.setFixedWidth(1000)
             font = QtGui.QFont()
-            font.setPointSize(10)
+            font.setPointSize(20)
             no_goal_text.setFont(font)
             no_goal_text.setStyleSheet("background: none; color: grey;")
             no_goal_text.setWordWrap(False)
             no_goal_text.setAlignment(QtCore.Qt.AlignCenter | QtCore.Qt.AlignVCenter)
             no_goal_text.setObjectName("no_goal_text")
             no_goal_text.setText('No goal was set yet')
+            self.gridLayout_5.addWidget(no_goal_text, 0, 0, 1, 1)
             return
         for i, goal in enumerate(goals):
             setattr(self, f'goal_{i + 1}', QtWidgets.QGroupBox(self.goals_frame))

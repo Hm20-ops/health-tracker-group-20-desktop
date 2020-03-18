@@ -1,12 +1,12 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow
-from qtpy import QtCore, QtWidgets
+from functools import partial
+from PyQt5 import QtCore, QtWidgets
 from ModelHandler import make_session
 from FoodDictionary import FoodDictionary
 from dietView import Ui_diet
 from PyQt5.QtCore import Qt, QAbstractTableModel, QModelIndex
 from PyQt5.QtGui import QColor
-
+from helper import *
 
 class CustomTableModel(QAbstractTableModel):#custom table for loading model
     def __init__(self, data=None):
@@ -49,27 +49,26 @@ class SortFilterProxyModel(QtCore.QSortFilterProxyModel):
         return super(SortFilterProxyModel, self).filterAcceptsRow(sourceRow, sourceParent)
 
 
-class Controller:
-    def __init__(self):
+class DietPresenter:
+    def __init__(self, parent, username):
         self.data = self.read_data()
-        self._app = QApplication(sys.argv)
+        self._user = username
 
+        #self.diet = QtWidgets.QWidget()
 
-        self.diet = QtWidgets.QWidget()
-        self.ui = Ui_diet()
-        self.ui.setupUi(self.diet)#pass the diet widget to the ui
+        #self.ui.setupUi(parent)#pass the diet widget to the ui
 
 
         self.proxyModel = SortFilterProxyModel()#make a proxy model object
         self.model = CustomTableModel(self.data)
         self.proxyModel.setSourceModel(self.model)
 
+        self.ui = Ui_diet(parent, self.proxyModel)
 
-        self.ui.food_database.setModel(self.proxyModel)#At initialisation, the proxyModel is the model itself
         self.checkExerciseSearch()#method for searching the database
-        self.ui.food_database.clicked.connect(self.displayInQlineEdit)#method for displaying text when row is clicked
-        self.ui.portion_input.textEdited.connect(self.getCaloricInformation)#method for editing calorific value when portion changes
-        self.ui.add_food.clicked.connect(self.addNewFood)#method to add new food to database
+        self.ui.food_database.clicked.connect(partial(self.displayInQlineEdit))#method for displaying text when row is clicked
+        self.ui.portion_input.textEdited.connect(partial(self.getCaloricInformation))#method for editing calorific value when portion changes
+        self.ui.add_food.clicked.connect(partial(self.addNewFood))#method to add new food to database
 
     def read_data(self):
         data=make_session().query(FoodDictionary).all()#query FoodDictionary to fetch all rows
@@ -91,7 +90,7 @@ class Controller:
          self.ui.calories_output.setText(str(baseCalories.data()))#display calorie
 
     def checkExerciseSearch(self):
-        self.ui.search_food_2.textEdited.connect(self.filterRegExpChanged)#signal to filter table based on search query
+        self.ui.search_food_2.textEdited.connect(partial(self.filterRegExpChanged))#signal to filter table based on search query
 
 
     def filterRegExpChanged(self):
@@ -121,8 +120,8 @@ class Controller:
 
     def addNewFood(self):
         if(self.ui.name_input.text()=='' or self.ui.calories_input.text()==''):#disallow adding food with empty text
-            #TODO to be printed in the GUI as a label
             print('not allowed')
+            display_message('Input cannot be empty', 'Please enter valid food name and calories')
         else:
             foodName=self.ui.name_input.text()
             calories=self.ui.calories_input.text()
@@ -135,10 +134,12 @@ class Controller:
             except Exception as e:
                 print(e)
 
-    def run(self):
-        self.diet.show()
-        return self._app.exec_()
+    def page(self):
+        return self.ui.scrollArea
+    # def run(self):
+    #     self.diet.show()
+    #     return self._app.exec_()
 
-if __name__ == "__main__":
-    c=Controller()
-    sys.exit(c.run())
+# if __name__ == "__main__":
+#     c=DietPresenter()
+#     sys.exit(c.run())
