@@ -59,12 +59,6 @@ class ExercisePresenter:
         self.data = self.read_data()
         self._user = username
 
-
-        #self.exercise = QtWidgets.QWidget()
-
-        #self.ui.setupUi(self.exercise)#pass the diet widget to the ui
-
-
         self.proxyModel = SortFilterProxyModel()#make a proxy model object
         self.model = CustomTableModel(self.data)
         self.proxyModel.setSourceModel(self.model)
@@ -144,9 +138,6 @@ class ExercisePresenter:
     def page(self):
         return self.ui.scrollArea
 
-    # def run(self):
-    #     self.exercise.show()
-    #     return self._app.exec_()
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)

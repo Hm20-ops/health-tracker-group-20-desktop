@@ -8,7 +8,6 @@
 
 import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox
 
 
 class Ui_Goal(object):
@@ -291,18 +290,19 @@ class Ui_Goal(object):
 
     def display_goals(self, goals):
         from datetime import datetime
-        if goals is None:
+        if len(goals) == 0:
             print('No goals set yet')
             no_goal_text = QtWidgets.QLabel(self.your_goals_frame)
             no_goal_text.setFixedWidth(1000)
             font = QtGui.QFont()
-            font.setPointSize(10)
+            font.setPointSize(20)
             no_goal_text.setFont(font)
             no_goal_text.setStyleSheet("background: none; color: grey;")
             no_goal_text.setWordWrap(False)
             no_goal_text.setAlignment(QtCore.Qt.AlignCenter | QtCore.Qt.AlignVCenter)
             no_goal_text.setObjectName("no_goal_text")
             no_goal_text.setText('No goal was set yet')
+            self.verticalLayout_3.addWidget(no_goal_text)
             return
         for i, goal in enumerate(goals):
             # set up the goal box

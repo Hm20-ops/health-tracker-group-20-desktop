@@ -5,8 +5,6 @@ from sqlalchemy.dialects.sqlite import DATE
 from sqlalchemy.ext.declarative import *
 from sqlalchemy.orm import sessionmaker, relationship
 from ModelHandler import *
-# Base = declarative_base()
-# engine = create_engine('sqlite:///User.db', echo=True)
 
 class Drink(Base):
     __tablename__ = 'Drink'

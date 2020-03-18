@@ -54,10 +54,6 @@ class DietPresenter:
         self.data = self.read_data()
         self._user = username
 
-        #self.diet = QtWidgets.QWidget()
-
-        #self.ui.setupUi(parent)#pass the diet widget to the ui
-
 
         self.proxyModel = SortFilterProxyModel()#make a proxy model object
         self.model = CustomTableModel(self.data)
@@ -136,10 +132,3 @@ class DietPresenter:
 
     def page(self):
         return self.ui.scrollArea
-    # def run(self):
-    #     self.diet.show()
-    #     return self._app.exec_()
-
-# if __name__ == "__main__":
-#     c=DietPresenter()
-#     sys.exit(c.run())

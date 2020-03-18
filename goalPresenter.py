@@ -6,7 +6,6 @@ import User
 from CustomGoal import *
 from BasicGoal import *
 from goalView import Ui_Goal
-from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox
 
 
 class goalPresenter:

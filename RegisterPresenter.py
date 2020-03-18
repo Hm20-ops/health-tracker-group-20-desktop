@@ -93,10 +93,6 @@ class RegisterPresenter:
         # check if username and password are correct
         check = session.query(User).filter(User.username == username, User.password == password).first() \
                 if len(username) != 0 or len(password) != 0 else False
-        # if len(username) == 0 or len(password) == 0:
-        #     check = False
-        # else:
-        #     check = session.query(User).filter(User.username == username, User.password == password).first()
         session.close()
         # if the check is successful redirect to the user home page, otherwise display error message
         if check:
