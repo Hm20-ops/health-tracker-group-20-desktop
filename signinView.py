@@ -32,7 +32,8 @@ class Ui_signinWindow(object):
         self.gridLayout_4.setSpacing(0)
         self.gridLayout_4.setObjectName("gridLayout_4")
         self.background = QtWidgets.QFrame(self.Login)
-        self.background.setStyleSheet("border-image: url(./sidebar_icon/Exercise-for-Cognitive-Health.jpg) 0 0 0 0 stretch stretch;")
+        self.background.setStyleSheet(
+            "border-image: url(./sidebar_icon/Exercise-for-Cognitive-Health.jpg) 0 0 0 0 stretch stretch;")
         self.background.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.background.setFrameShadow(QtWidgets.QFrame.Raised)
         self.background.setObjectName("background")
@@ -45,8 +46,8 @@ class Ui_signinWindow(object):
         font.setPointSize(10)
         self.frame_2.setFont(font)
         self.frame_2.setStyleSheet("background:transparent;\n"
-"color:rgb(59, 59, 59);\n"
-"border-image:none;")
+                                   "color:rgb(59, 59, 59);\n"
+                                   "border-image:none;")
         self.frame_2.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_2.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_2.setObjectName("frame_2")
@@ -68,7 +69,7 @@ class Ui_signinWindow(object):
         font.setPointSize(18)
         self.login.setFont(font)
         self.login.setStyleSheet("background: rgb(222, 222, 222); \n"
-"")
+                                 "")
         self.login.setObjectName("login")
         self.gridLayout_10.addWidget(self.login, 1, 0, 1, 1)
         self.login_password = QtWidgets.QLineEdit(self.login_frame)
@@ -76,7 +77,7 @@ class Ui_signinWindow(object):
         font.setPointSize(18)
         self.login_password.setFont(font)
         self.login_password.setStyleSheet("background-color: rgb(255, 255, 255);\n"
-"border: 1px solid black")
+                                          "border: 1px solid black")
         self.login_password.setEchoMode(QtWidgets.QLineEdit.Password)
         self.login_password.setInputMask("")
         self.login_password.setText("")
@@ -87,7 +88,7 @@ class Ui_signinWindow(object):
         font.setPointSize(18)
         self.create_account.setFont(font)
         self.create_account.setStyleSheet("background: rgb(222, 222, 222); \n"
-"")
+                                          "")
         self.create_account.setObjectName("create_account")
         self.gridLayout_10.addWidget(self.create_account, 1, 1, 1, 1)
         self.login_username = QtWidgets.QLineEdit(self.login_frame)
@@ -140,7 +141,7 @@ class Ui_signinWindow(object):
         font.setPointSize(10)
         self.name_label.setFont(font)
         self.name_label.setStyleSheet("background:rgb(222, 222, 222); \n"
-"color:rgb(62, 62, 62);")
+                                      "color:rgb(62, 62, 62);")
         self.name_label.setReadOnly(True)
         self.name_label.setObjectName("name_label")
         self.gridLayout_5.addWidget(self.name_label, 0, 0, 1, 1)
@@ -149,7 +150,7 @@ class Ui_signinWindow(object):
         font.setPointSize(10)
         self.dob_label.setFont(font)
         self.dob_label.setStyleSheet("background:rgb(222, 222, 222); \n"
-"color:rgb(62, 62, 62);")
+                                     "color:rgb(62, 62, 62);")
         self.dob_label.setReadOnly(True)
         self.dob_label.setObjectName("dob_label")
         self.gridLayout_5.addWidget(self.dob_label, 1, 0, 1, 1)
@@ -172,7 +173,7 @@ class Ui_signinWindow(object):
         font.setPointSize(10)
         self.gender_label.setFont(font)
         self.gender_label.setStyleSheet("background:rgb(222, 222, 222); \n"
-"color:rgb(62, 62, 62);")
+                                        "color:rgb(62, 62, 62);")
         self.gender_label.setReadOnly(True)
         self.gender_label.setObjectName("gender_label")
         self.gridLayout_5.addWidget(self.gender_label, 2, 0, 1, 1)
@@ -181,7 +182,7 @@ class Ui_signinWindow(object):
         font.setPointSize(10)
         self.height_label.setFont(font)
         self.height_label.setStyleSheet("background:rgb(222, 222, 222); \n"
-"color:rgb(62, 62, 62);")
+                                        "color:rgb(62, 62, 62);")
         self.height_label.setReadOnly(True)
         self.height_label.setObjectName("height_label")
         self.gridLayout_5.addWidget(self.height_label, 3, 0, 1, 1)
@@ -207,7 +208,7 @@ class Ui_signinWindow(object):
         font.setPointSize(10)
         self.weight_label.setFont(font)
         self.weight_label.setStyleSheet("background:rgb(222, 222, 222); \n"
-"color:rgb(62, 62, 62);")
+                                        "color:rgb(62, 62, 62);")
         self.weight_label.setReadOnly(True)
         self.weight_label.setObjectName("weight_label")
         self.gridLayout_5.addWidget(self.weight_label, 4, 0, 1, 1)
@@ -224,7 +225,7 @@ class Ui_signinWindow(object):
         font.setPointSize(10)
         self.username_label.setFont(font)
         self.username_label.setStyleSheet("background:rgb(222, 222, 222); \n"
-"color:rgb(62, 62, 62);")
+                                          "color:rgb(62, 62, 62);")
         self.username_label.setReadOnly(True)
         self.username_label.setObjectName("username_label")
         self.gridLayout_5.addWidget(self.username_label, 5, 0, 1, 1)
@@ -242,7 +243,7 @@ class Ui_signinWindow(object):
         font.setPointSize(10)
         self.email_label.setFont(font)
         self.email_label.setStyleSheet("background:rgb(222, 222, 222); \n"
-"color:rgb(62, 62, 62);")
+                                       "color:rgb(62, 62, 62);")
         self.email_label.setReadOnly(True)
         self.email_label.setObjectName("email_label")
         self.gridLayout_5.addWidget(self.email_label, 7, 0, 1, 1)
@@ -259,7 +260,7 @@ class Ui_signinWindow(object):
         font.setPointSize(10)
         self.password_label.setFont(font)
         self.password_label.setStyleSheet("background:rgb(222, 222, 222); \n"
-"color:rgb(62, 62, 62);")
+                                          "color:rgb(62, 62, 62);")
         self.password_label.setReadOnly(True)
         self.password_label.setObjectName("password_label")
         self.gridLayout_5.addWidget(self.password_label, 6, 0, 1, 1)
@@ -277,7 +278,7 @@ class Ui_signinWindow(object):
         font.setPointSize(14)
         self.signup.setFont(font)
         self.signup.setStyleSheet("background:rgb(222, 222, 222); \n"
-"")
+                                  "")
         self.signup.setObjectName("signup")
         self.verticalLayout_22.addWidget(self.signup)
         self.cancel = QtWidgets.QPushButton(self.input_frame)
@@ -285,7 +286,7 @@ class Ui_signinWindow(object):
         font.setPointSize(14)
         self.cancel.setFont(font)
         self.cancel.setStyleSheet("background:rgb(222, 222, 222); \n"
-"")
+                                  "")
         self.cancel.setObjectName("cancel")
         self.verticalLayout_22.addWidget(self.cancel)
         self.gridLayout_2.addWidget(self.input_frame, 1, 0, 1, 1)
@@ -296,11 +297,11 @@ class Ui_signinWindow(object):
         sizePolicy.setHeightForWidth(self.header_frame.sizePolicy().hasHeightForWidth())
         self.header_frame.setSizePolicy(sizePolicy)
         self.header_frame.setStyleSheet("QFrame{\n"
-"background-color: rgb(255, 255, 255);\n"
-"color:rgb(62, 62, 62);\n"
-"border: none;\n"
-"\n"
-"}")
+                                        "background-color: rgb(255, 255, 255);\n"
+                                        "color:rgb(62, 62, 62);\n"
+                                        "border: none;\n"
+                                        "\n"
+                                        "}")
         self.header_frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.header_frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.header_frame.setObjectName("header_frame")
@@ -309,10 +310,10 @@ class Ui_signinWindow(object):
         self.gridLayout_3.setObjectName("gridLayout_3")
         self.register_header = QtWidgets.QLabel(self.header_frame)
         self.register_header.setStyleSheet("QLabel{\n"
-"background:rgb(218, 0, 0); \n"
-"color:rgb(59, 59, 59);\n"
-"border: none;\n"
-"}")
+                                           "background:rgb(218, 0, 0); \n"
+                                           "color:rgb(59, 59, 59);\n"
+                                           "border: none;\n"
+                                           "}")
         self.register_header.setIndent(40)
         self.register_header.setObjectName("register_header")
         self.gridLayout_3.addWidget(self.register_header, 0, 0, 1, 1)
@@ -351,4 +352,5 @@ class Ui_signinWindow(object):
         self.email.setPlaceholderText(_translate("signinWindow", "email"))
         self.signup.setText(_translate("signinWindow", "Sign up"))
         self.cancel.setText(_translate("signinWindow", "Cancel"))
-        self.register_header.setText(_translate("signinWindow", "<html><head/><body><p><span style=\" font-family:\'Segoe UI\'; font-size:36pt;\">Register</span></p></body></html>"))
+        self.register_header.setText(_translate("signinWindow",
+                                                "<html><head/><body><p><span style=\" font-family:\'Segoe UI\'; font-size:36pt;\">Register</span></p></body></html>"))

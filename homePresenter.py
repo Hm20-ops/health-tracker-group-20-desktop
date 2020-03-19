@@ -10,6 +10,7 @@ from DietPresenter import DietPresenter
 from ExercisePresenter import ExercisePresenter
 from Group import Group
 from Diet import *
+from UserExercise import UserExercise
 from helper import display_message
 from mainView import Ui_Health_tracker
 from PyQt5 import QtWidgets
@@ -22,12 +23,14 @@ class homePresenter:
 		self.parent = parent
 		self._user_model = User.User()
 		self._user = username
-		self._group_model = Group()
-		# self._basic_goal_model = BasicGoal()
+		self._exercise_model = UserExercise()
+		self._diet_model = UserMeal()
+		self._food_calorie = int(self._diet_model.totalCalorieToday(username))
+		self._calorie_burnt = int(self._exercise_model.totalCaloriesBurnt(username))
 		self._custom_goal_model = CustomGoal()
 		goals = self._custom_goal_model.get_recent(username)
 		self.data = [65, 64.9, 64.6, 64.5, 64.5, 64.3, 64.2]
-		self._view = Ui_Home(parent, goals, self.data)
+		self._view = Ui_Home(parent, goals, self._food_calorie, self._calorie_burnt, self.data)
 		self._view.add_exercise.clicked.connect(lambda: self.to_exercise())
 		self._view.add_diet.clicked.connect(lambda: self.to_diet())
 		self._view.add_weight.clicked.connect(lambda: self.update_weight())

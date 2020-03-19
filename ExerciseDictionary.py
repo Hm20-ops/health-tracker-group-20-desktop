@@ -9,18 +9,19 @@ class ExerciseDictionary(Base):
     activity = Column(String, primary_key=False)  # these attributes map directly to columns in the table
     specificMotion = Column(String, unique=False)
     metValue = Column(REAL)
+
     @staticmethod
-    def addExercise(activity,specificMotion,metValue):
-        session=make_session()
-        addExercise=ExerciseDictionary(activity=activity,specificMotion=specificMotion,metValue=metValue)
+    def addExercise(activity, specificMotion, metValue):
+        session = make_session()
+        addExercise = ExerciseDictionary(activity=activity, specificMotion=specificMotion, metValue=metValue)
         session.add(addExercise)
         session.commit()
         session.close()
 
     def get_all_exercises(self):
         session = make_session()
-        data = session.query(ExerciseDictionary)\
-                      .with_entities(ExerciseDictionary.specificMotion, ExerciseDictionary.metValue).all()
+        data = session.query(ExerciseDictionary) \
+            .with_entities(ExerciseDictionary.specificMotion, ExerciseDictionary.metValue).all()
 
         session.close()
         return data

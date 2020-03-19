@@ -14,10 +14,10 @@ import matplotlib.pyplot as plt
 
 
 class Ui_Home(object):
-    def __init__(self, parent, goals, data):
-        self.setupUi(parent, goals, data)
+    def __init__(self, parent, goals, food_calorie=0, calorie_burnt=0, data=[]):
+        self.setupUi(parent, goals, food_calorie, calorie_burnt, data)
 
-    def setupUi(self, Home, goals, data):
+    def setupUi(self, Home, goals, food_calorie, calorie_burnt, data):
         Home.setObjectName("Home")
         Home.resize(1500, 794)
         self.verticalLayout_3 = QtWidgets.QVBoxLayout(Home)
@@ -159,7 +159,7 @@ class Ui_Home(object):
                                 "border: none;\n"
                                 "\n"
                                 "}")
-        self.food.setProperty("intValue", 0)
+        self.food.setProperty("intValue", food_calorie)
         self.food.setObjectName("food")
         self.gridLayout_4.addWidget(self.food, 1, 6, 1, 1, QtCore.Qt.AlignHCenter)
         self.exercise_label = QtWidgets.QLabel(self.calorie_tracker)
@@ -185,7 +185,7 @@ class Ui_Home(object):
                                     "border: none;\n"
                                     "\n"
                                     "}")
-        self.exercise.setProperty("intValue", 0)
+        self.exercise.setProperty("intValue", calorie_burnt)
         self.exercise.setObjectName("exercise")
         self.gridLayout_4.addWidget(self.exercise, 1, 7, 1, 1, QtCore.Qt.AlignHCenter)
         self.calorine_progress = QtWidgets.QProgressBar(self.calorie_tracker)
@@ -209,7 +209,7 @@ class Ui_Home(object):
                                        "border: none;\n"
                                        "\n"
                                        "}")
-        self.net_calorie.setProperty("intValue", 0)
+        self.net_calorie.setProperty("intValue", food_calorie - calorie_burnt)
         self.net_calorie.setObjectName("net_calorie")
         self.gridLayout_4.addWidget(self.net_calorie, 1, 8, 1, 1, QtCore.Qt.AlignHCenter)
         self.line = QtWidgets.QFrame(self.calorie_tracker)

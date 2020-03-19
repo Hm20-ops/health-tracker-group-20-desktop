@@ -187,6 +187,7 @@ class Ui_diet(object):
 "\n"
 "")
         self.lineEdit_2.setObjectName("lineEdit_2")
+        self.lineEdit_2.setReadOnly(True)
         self.gridLayout_2.addWidget(self.lineEdit_2, 3, 1, 1, 1)
         self.horizontalLayout_27.addWidget(self.search_food)
         self.add_food_box = QtWidgets.QGroupBox(self.add_and_search_siet)

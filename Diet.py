@@ -6,56 +6,29 @@ from sqlalchemy.ext.declarative import *
 from sqlalchemy.orm import sessionmaker, relationship
 from ModelHandler import *
 
-class Drink(Base):
-    __tablename__ = 'Drink'
-
-    id = Column(Integer, primary_key=True)
-    name = Column(String, nullable=False)
-
-
 class UserMeal(Base):
     __tablename__ = 'UserMeal'
 
-    username = Column(ForeignKey('User.username', ondelete='CASCADE', onupdate='CASCADE'), primary_key=True, nullable=False)
-    meal_id = Column(Integer, primary_key=True, nullable=False)
-    name = Column(String, nullable=False)
+    consumptionId = Column(Integer, primary_key=True)
+    foodId = Column(ForeignKey('FoodDictionary.foodId'))
+    username = Column(ForeignKey('User.username'), nullable=False)
+    caloriesEatenPerFood = Column(Float, nullable=False)
+    dateIntake = Column(Text, server_default=text("NULL"))
 
-    # foreign keys definition to user table
+    FoodDictionary = relationship('FoodDictionary')
     User = relationship('User')
 
-
-class DrinkConsumed(Base):
-    __tablename__ = 'DrinkConsumed'
-    __table_args__ = (
-        CheckConstraint('quantity>0'),
-    )
-
-    username = Column(ForeignKey('UserMeal.username', ondelete='CASCADE', onupdate='CASCADE'), primary_key=True, nullable=False)
-    meal_id = Column(ForeignKey('UserMeal.meal_id', ondelete='CASCADE'), primary_key=True, nullable=False)
-    drink_id = Column(ForeignKey('Drink.id', ondelete='RESTRICT'), nullable=False)
-    quantity = Column(Integer, nullable=False)
-
-    # foreign keys definitions
-    drink = relationship('Drink')
-    meal = relationship('UserMeal', primaryjoin='DrinkConsumed.meal_id == UserMeal.meal_id')
-    UserMeal = relationship('UserMeal', primaryjoin='DrinkConsumed.username == UserMeal.username')
-
-
-class FoodConsumed(Base):
-    __tablename__ = 'FoodConsumed'
-    __table_args__ = (
-        CheckConstraint('quantity>0'),
-    )
-
-    username = Column(ForeignKey('UserMeal.username', ondelete='CASCADE', onupdate='CASCADE'), primary_key=True, nullable=False)
-    meal_id = Column(ForeignKey('UserMeal.meal_id', ondelete='CASCADE'), primary_key=True, nullable=False)
-    food_id = Column(ForeignKey('FoodDictionary.foodId', ondelete='RESTRICT'), nullable=False)
-    quantity = Column(Integer, nullable=False)
-
-    # foreign keys definitions
-    food = relationship('FoodDictionary')
-    meal = relationship('UserMeal', primaryjoin='FoodConsumed.meal_id == UserMeal.meal_id')
-    UserMeal = relationship('UserMeal', primaryjoin='FoodConsumed.username == UserMeal.username')
+    def totalCalorieToday(self, username):
+        #fetch username
+        #for that username, fetch for today's date, all the calories
+        #add up the calories here
+        session = make_session()
+        calEaten = session.query(func.sum(UserMeal.caloriesEatenPerFood).label('caloriesConsumed'))\
+                          .filter(UserMeal.dateIntake == datetime.today().strftime('%d/%m/%Y'),
+                                  UserMeal.username == username)\
+                          .group_by(UserMeal.username).first()[0]
+        session.close()
+        return calEaten
 
 
 def main():

@@ -1,14 +1,9 @@
-
-from enum import Enum
 import re
-#import Group
-from datetime import datetime,date
+# import Group
+from datetime import datetime, date
 
 from sqlalchemy import *
-from sqlalchemy import types, create_engine
 from sqlalchemy.dialects.sqlite import DATE
-from sqlalchemy.ext.declarative import *
-from sqlalchemy.orm import sessionmaker
 
 from ModelHandler import *
 
@@ -72,7 +67,7 @@ class User(Base):
 
     def update_weight(self, username, weight):
         session = make_session()
-        #update(User).where(User.username == username).values(weight=weight)
+        # update(User).where(User.username == username).values(weight=weight)
         user = session.query(User).get(username)
         user.weight = weight
         session.commit()
@@ -80,7 +75,7 @@ class User(Base):
 
     def age_calculator(self):
         today = date.today()
-        age = today.year - self.dob.year -((today.month, today.day) <(self.dob.month, self.dob.day))
+        age = today.year - self.dob.year - ((today.month, today.day) < (self.dob.month, self.dob.day))
         return age
 
     def make_session(self):
