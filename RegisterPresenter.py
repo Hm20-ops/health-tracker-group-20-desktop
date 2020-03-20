@@ -2,6 +2,8 @@ import smtplib
 import sys
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+
+from PyQt5.QtTest import QTest
 from validate_email import validate_email
 import User
 import MainPresenter
@@ -10,7 +12,7 @@ from functools import partial
 from sqlalchemy.orm import sessionmaker
 from signinView import Ui_signinWindow
 from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox
-from PyQt5.QtCore import pyqtSlot
+from PyQt5.QtCore import pyqtSlot, Qt
 from helper import *
 
 '''
@@ -103,6 +105,12 @@ class RegisterPresenter:
             print('login failed')
             display_message("Login Error",
                             "username or password is incorrect")
+
+    def test_input(self, username, password):
+        self._view.login_username.setText(username)
+        self._view.login_password.setText(password)
+        QTest.mouseClick(self._view.login, Qt.LeftButton)
+        return self._redirect_to
 
 
 class MainWindow(QMainWindow, Ui_signinWindow):

@@ -26,9 +26,9 @@ class UserMeal(Base):
         calEaten = session.query(func.sum(UserMeal.caloriesEatenPerFood).label('caloriesConsumed'))\
                           .filter(UserMeal.dateIntake == datetime.today().strftime('%d/%m/%Y'),
                                   UserMeal.username == username)\
-                          .group_by(UserMeal.username).first()[0]
+                          .group_by(UserMeal.username).first()
         session.close()
-        return calEaten
+        return calEaten[0] if calEaten is not None else 0
 
 
 def main():

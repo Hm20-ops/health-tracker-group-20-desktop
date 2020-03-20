@@ -17,6 +17,7 @@ from alembic import op
 from sqlalchemy import Column
 
 import User
+from CustomGoal import CustomGoal
 from ModelHandler import *
 
 
@@ -39,6 +40,15 @@ class Group(Base):
         session.add(group)
         session.commit()  # need to commit for changes to appear in database
         session.close()
+
+    @staticmethod
+    def get_all_group():
+        session = make_session()
+        # query FoodDictionary to fetch all rows
+        data = session.query(Group).join(CustomGoal) \
+            .with_entities(Group.groupName, CustomGoal.goal_description).all()
+        session.close()
+        return data
 
     # def __init__(self, name, type, admin=[], members=[], common_goal=None):
     #     self.__id = id(self)
@@ -99,7 +109,7 @@ def main():
     date_object = datetime.strptime(date_str, '%d-%m-%Y').date()
 
     Group.createGroup(2, 'FatBurner', 'OPEN', date_object)
-    # print()
+
 
 
 if __name__ == '__main__':

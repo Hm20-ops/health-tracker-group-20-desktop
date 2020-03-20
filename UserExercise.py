@@ -23,6 +23,6 @@ class UserExercise(Base):
 		calBurntResult = session.query(func.sum(UserExercise.caloriesBurnt).label('caloriesBurnt'))\
 								.filter(UserExercise.username == username,
 							            UserExercise.activityDate == datetime.today().strftime('%d/%m/%Y'))\
-								.group_by(UserExercise.username).first()[0]
+								.group_by(UserExercise.username).first()
 		session.close()
-		return calBurntResult
+		return calBurntResult[0] if calBurntResult is not None else 0

@@ -64,6 +64,9 @@ class MainPresenter:
     def logout(self):
         self._view.close()
         return RegisterPresenter.RegisterPresenter()
+    @property
+    def current_user(self):
+        return self._user
 
 class MainWindow(QMainWindow, Ui_Health_tracker):
     def __init__(self, *args, obj=None, **kwargs):
