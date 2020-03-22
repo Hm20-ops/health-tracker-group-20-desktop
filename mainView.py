@@ -8,7 +8,6 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-# from homePresenter import homePresenter
 
 class Ui_Health_tracker(object):
 	def setupUi(self, Healthtracker):

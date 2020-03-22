@@ -1,8 +1,11 @@
 import sys
+from datetime import datetime, timedelta
+
 import RegisterPresenter
+from CustomGoal import CustomGoal
 from mainView import Ui_Health_tracker
 from PyQt5.QtCore import pyqtSlot
-from PyQt5.QtWidgets import QMainWindow, QApplication, QListWidgetItem
+from PyQt5.QtWidgets import QMainWindow, QApplication, QListWidgetItem, QMessageBox
 from homePresenter import homePresenter
 from profilePresenter import profilePresenter
 from goalPresenter import goalPresenter
@@ -19,6 +22,7 @@ class MainPresenter:
     def __init__(self, username):
         self._redirect_to = None
         self._user = username
+        self.goal_model = CustomGoal()
 
         self._view = MainWindow()
         self._view.side_nav_bar.itemClicked.connect(lambda :self.navigate())
@@ -27,6 +31,8 @@ class MainPresenter:
         self._view.side_nav_bar.setCurrentItem(QListWidgetItem(" Home"))
         self.view_page.addWidget(self.home())
         self._view.show()
+        self.goal_check()
+
 
     @pyqtSlot()
     def navigate(self):
@@ -67,6 +73,33 @@ class MainPresenter:
     @property
     def current_user(self):
         return self._user
+
+    def goal_check(self):
+        goals = self.goal_model.get(self._user)
+        for goal in goals:
+            if goal.date == datetime.strptime('2020-03-14', "%Y-%m-%d").date():
+                answer = QMessageBox() \
+                        .question(self._view,
+                                  'There is a goal due today',
+                                  f'Have you met your goal: \n{goal.goal_description}?',
+                                  QMessageBox.Yes | QMessageBox.No
+                                  )
+                if answer == QMessageBox.Yes:
+                    self.goal_model.goal_archived(goal.id)
+                else:
+                    print('goal failed')
+
+                description = 'do push up everytime in gym'
+                new_date = goal.date + timedelta(days=7)
+                add = QMessageBox() \
+                      .question(self._view,
+                                'New goal suggestion',
+                                f'Would you like to add a new goal on top tof this goal?\n'
+                                f'goal: {description} \n date: {new_date}',
+                                QMessageBox.Yes | QMessageBox.No
+                                )
+                if add == QMessageBox.Yes:
+                    self.goal_model.create_custom_goal(self._user, description, new_date)
 
 class MainWindow(QMainWindow, Ui_Health_tracker):
     def __init__(self, *args, obj=None, **kwargs):

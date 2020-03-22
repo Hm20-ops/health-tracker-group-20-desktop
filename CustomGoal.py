@@ -39,7 +39,7 @@ class CustomGoal(Base):
         session = make_session()
         custom_goal = CustomGoal()
         custom_goal.username = username
-        custom_goal.description = description
+        custom_goal.goal_description = description
         custom_goal.date = date
         custom_goal.isMet = 0
         custom_goal.checkin_interval = checkin_interval
@@ -48,6 +48,7 @@ class CustomGoal(Base):
         custom_goal.pass_interval = pass_interval
         custom_goal.group_id = group_id
 
+        session.add(custom_goal)
         session.commit()
         session.close()
 
@@ -60,6 +61,14 @@ class CustomGoal(Base):
 
         session.close()
         return recents
+
+    def goal_archived(self, id):
+        session = make_session()
+        user_custom_goal = session.query(CustomGoal).get(id)
+        user_custom_goal.isMet = 1
+        session.commit()
+        session.close()
+
 
 def main():
     print()

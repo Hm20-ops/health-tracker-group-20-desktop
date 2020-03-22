@@ -1,7 +1,4 @@
-import smtplib
 import sys
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
 
 from PyQt5.QtTest import QTest
 from validate_email import validate_email
@@ -9,9 +6,8 @@ import User
 import MainPresenter
 from User import User
 from functools import partial
-from sqlalchemy.orm import sessionmaker
 from signinView import Ui_signinWindow
-from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox
+from PyQt5.QtWidgets import QMainWindow, QApplication
 from PyQt5.QtCore import pyqtSlot, Qt
 from helper import *
 
