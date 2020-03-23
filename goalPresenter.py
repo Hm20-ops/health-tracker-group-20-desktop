@@ -43,7 +43,7 @@ class goalPresenter:
         description = self._view.goal_description.toPlainText()
         days = self._view.days.value()
         period = self._view.period.value()
-        complete_date = self._view.completion_date.date()
+        complete_date = self._view.completion_date.date().toPyDate()
         # pass them to model to create custom goal
         # not sure if I am doing this right, PLEASE check carefully
         self._user_custom_goal_model.create_custom_goal(self._user, description, complete_date,

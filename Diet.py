@@ -1,9 +1,7 @@
 import User
 from datetime import datetime,date
 from sqlalchemy import *
-from sqlalchemy.dialects.sqlite import DATE
-from sqlalchemy.ext.declarative import *
-from sqlalchemy.orm import sessionmaker, relationship
+from sqlalchemy.orm import relationship
 from ModelHandler import *
 
 class UserMeal(Base):

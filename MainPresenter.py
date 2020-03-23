@@ -1,5 +1,5 @@
 import sys
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 
 import RegisterPresenter
 from CustomGoal import CustomGoal
@@ -32,7 +32,7 @@ class MainPresenter:
         self._view.side_nav_bar.setCurrentItem(QListWidgetItem(" Home"))
         self.view_page.addWidget(self.home())
         self._view.show()
-        self.goal_check()
+        #self.goal_check()
 
 
     @pyqtSlot()
@@ -78,19 +78,17 @@ class MainPresenter:
     def goal_check(self):
         goals = self.goal_model.get(self._user)
         for goal in goals:
-            if goal.date == datetime.strptime('2020-03-14', "%Y-%m-%d").date():
+            if goal.date == date.today():
                 answer = QMessageBox() \
                         .question(self._view,
-                                  'There is a goal due today',
+                                  'Goal checking',
                                   f'Have you met your goal: \n{goal.goal_description}?',
                                   QMessageBox.Yes | QMessageBox.No
                                   )
                 if answer == QMessageBox.Yes:
                     self.goal_model.goal_archived(goal.id)
-                else:
-                    print('goal failed')
 
-                description = 'do push up everytime in gym'
+                description = 'do 20 times push up everyday'
                 new_date = goal.date + timedelta(days=7)
                 add = QMessageBox() \
                       .question(self._view,

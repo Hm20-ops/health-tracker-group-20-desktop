@@ -1,15 +1,14 @@
 import sys
-
-from PyQt5.QtWidgets import QApplication
+from functools import partial
 from qtpy import QtCore, QtWidgets
 from PyQt5.QtCore import Qt, QAbstractTableModel, QModelIndex
 from PyQt5.QtGui import QColor
 
 from CustomGoal import CustomGoal
-from User import User
 from UserGroup import UserGroup
 from groupView import Ui_group
 from Group import *
+from helper import display_message
 
 
 class CustomTableModel(QAbstractTableModel):  # custom table for loading model
@@ -58,7 +57,6 @@ class GroupPresenter:
     def __init__(self, parent, username):
         self._user = username
         self._group_model = Group()
-        #self._user_model = User()
         self._user_group_model = UserGroup()
         self._custom_goal = CustomGoal()
 
@@ -68,21 +66,21 @@ class GroupPresenter:
         self.proxyModel.setSourceModel(self.model)
 
         self.ui = Ui_group(parent, self.proxyModel, self.data)
-        self.ui.group_table.setModel(self.proxyModel)  # At initialisation, the proxyModel is the model itself
+        #self.ui.group_table.setModel(self.proxyModel)  # At initialisation, the proxyModel is the model itself
         self.checkGroupSearch()  # method for searching the database
-        self.ui.group_table.clicked.connect(self.displayInQlineEdit)  # method for displaying text when row is clicked
+        self.ui.group_table.clicked.connect(partial(self.displayInQlineEdit))  # method for displaying text when row is clicked
 
-#       self.ui.group_name_output.textEdited.connect(
-#            self.getGroupGoalInformation)  # method for editing calorific value when portion changes
-#        self.ui.join_group_button.clicked.connect(self.addUserGroup)  # method to add new food to database
+        #self.ui.group_name_output.textEdited.connect(partial(self.addNewGroup))  # method for editing calorific value when portion changes
+        self.ui.create_group_button.clicked.connect(partial(self.addNewGroup))  # method to add new food to database
+        self.ui.join_group_button.clicked.connect(partial(self.joinNewGroup))  # method to add new food to database
 
         # self.ui.setupUi(self.group)  # pass the diet widget to the ui
 
     def read_data(self):
         session = make_session()
-        # query FoodDictionary to fetch all rows
+        # query FoodDictionary to fetch all rows   .with_entities(Group.groupName, CustomGoal.goal_description)
         data = session.query(Group).join(CustomGoal) \
-            .with_entities(Group.groupName, CustomGoal.goal_description).all()
+            .with_entities(Group.groupName, CustomGoal.goal_description, CustomGoal.date).all()
         session.close()
         return data
 
@@ -95,7 +93,7 @@ class GroupPresenter:
 
     def checkGroupSearch(self):
         self.ui.search_input.textEdited.connect(
-            self.filterRegExpChanged)  # signal to filter table based on search query
+            partial(self.filterRegExpChanged))  # signal to filter table based on search query
 
     def filterRegExpChanged(self):
         syntax = QtCore.QRegExp.PatternSyntax(QtCore.QRegExp.FixedString)
@@ -104,66 +102,49 @@ class GroupPresenter:
                                 QtCore.Qt.CaseInsensitive, syntax)
         self.proxyModel.setFilterRegExp(regExp)
 
-    # def getGroupGoalInformation(self):
-    #     index = self.ui.group_table.currentIndex()
-    #     session = make_session()
-    #     baseCalorie = (session.query(Group).get(
-    #         index.row() + 1).calories)  # for an index in table, query correspoding baseCalorie
-    #     session.close()
-    #     try:
-    #         '''
-    #         calorieIntake=(portion in gram input/100g)*baseCalorie
-    #         display calorieIntake
-    #         '''
-    #         self.ui.calories_output.setText(
-    #             str(round((float(self.ui.portion_input.text()) / 100) * float(baseCalorie), 3)))
-    #     except Exception as e:
-    #         # if input is empty. Display 0
-    #         self.ui.calories_output.setText(str(0))
-    #         print(e)  # display exception on console for debugging
 
     def addNewGroup(self):
         if (self.ui.group_name_input.text() == '' or self.ui.group_goal_input.text() == ''):  # disallow adding food with empty text
             print('not allowed')
+            display_message('Input cannot be empty', 'Please enter valid group name and description')
         else:
             groupName = self.ui.group_name_input.text()
+            groupType = self.ui.group_type.currentText().upper()
             groupGoal = self.ui.group_goal_input.text()
-            completionDate = self.ui.completion_date.date()
+            completionDate = self.ui.completion_date.date().toPyDate()
             try:
-                Group.createGroup(groupID, groupName, groupGoal, completionDate)
-                UserGroup.createUserGroup(self._user, groupID)
+                groupID = Group.createGroup(groupName, groupType, completionDate)
+                self._user_group_model.createUserGroup(self._user, groupID)
+                self._custom_goal.create_custom_goal(self._user, groupGoal, date.today(), group_id=groupID)
+
                 self.data = self.read_data()
                 self.model = CustomTableModel(self.data)  # reset model
                 self.proxyModel.setSourceModel(self.model)  # display added food without a need for refreshing
                 self.ui.group_table.setModel(self.proxyModel)
+                display_message('New group added', 'You have added a new group successfully', False)
             except Exception as e:
+                display_message('Invalid input',
+                                'Please enter a valid group name or description!')
                 print(e)
 
-    # idk if this will work
+    # function to put user into a group
     def joinNewGroup(self):
         groupName = self.ui.group_name_output.text()
         groupGoal = self.ui.group_goal_output.text()
         try:
-            UserGroup.addUserGroup(groupName, groupGoal)
+            self._user_group_model.addUserGroup(self._user, self._group_model.get_id_by_name(groupName))
             self.data = self.read_data()
             self.model = CustomTableModel(self.data)  # reset model
             self.proxyModel.setSourceModel(self.model)  # display added food without a need for refreshing
             self.ui.group_table.setModel(self.proxyModel)
+            display_message('Joined group', 'You have joined a new group successfully', False)
         except Exception as e:
+            display_message('Fail to join group',
+                            'Error joining the group, please check your input and try again!')
             print(e)
-
-    # def run(self):
-    #     self.diet.show()
-    #     return self._app.exec_()
 
     def page(self):
         return self.ui.scrollArea
-
-# if __name__ == "__main__":
-#     app = QtWidgets.QApplication(sys.argv)
-#     c = GroupPresenter(QtWidgets.QWidget(), '')
-#     sys.exit(app.exec_())
-
 
 # # constructor
 # # parent: widget that holds the view i.e. the stackWidget in main

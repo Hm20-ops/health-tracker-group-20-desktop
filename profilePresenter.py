@@ -6,6 +6,7 @@ from validate_email import validate_email
 
 import User
 from Diet import *
+from helper import display_message
 from profileView import Ui_Profile
 from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox
 
@@ -29,6 +30,7 @@ class profilePresenter:
 
     @pyqtSlot()
     def edit_details(self, user):
+        valid = True
         # get all data from the view
         new_username = self._view.username.text()
         new_name = self._view.name.text()
@@ -40,14 +42,20 @@ class profilePresenter:
 
         # validate the input
         if len(new_username) == 0:
-            print()
+            display_message('username is empty', 'username cannot be empty')
+            valid = False
         if len(new_name) == 0:
-            print()
-        if len(new_email) == 0 or validate_email(new_email):
-            print()
-        # push changes to the database
-        self._user_model.edit_details(user, new_username, new_name, new_dob,
-                                      new_gender, new_weight, new_height, new_email)
+            display_message('name is empty', 'name cannot be empty')
+            valid = False
+        if len(new_email) == 0 or not validate_email(new_email):
+            display_message('email is empty or invalid', 'email cannot be empty, please enter a valid email')
+            valid = False
+
+        if valid:
+            # push changes to the database
+            self._user_model.edit_details(user, new_username, new_name, new_dob,
+                                          new_gender, new_weight, new_height, new_email)
+            display_message('Details editted successfully', 'You have update your details!')
 
     def enable_edit(self):
         if not self._view.edit_info.isEnabled():

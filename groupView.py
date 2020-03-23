@@ -120,6 +120,10 @@ class Ui_group(object):
         self.group_name_output.setObjectName("group_name_output")
         self.gridLayout_2.addWidget(self.group_name_output, 2, 1, 1, 1)
         self.group_table = QtWidgets.QTableView(self.search_group_box)
+        self.group_table.setModel(group)
+        self.group_table.horizontalHeader().setSectionResizeMode(0, QtWidgets.QHeaderView.Stretch)
+        self.group_table.horizontalHeader().setSectionResizeMode(1, QtWidgets.QHeaderView.ResizeToContents)
+        self.group_table.verticalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Interactive)
         font = QtGui.QFont()
         font.setPointSize(12)
         self.group_table.setFont(font)
@@ -307,6 +311,7 @@ class Ui_group(object):
         self.each_group_layout.setObjectName("each_group_layout")
         self.verticalLayout_7 = QtWidgets.QVBoxLayout(self.each_group_layout)
         self.verticalLayout_7.setObjectName("verticalLayout_7")
+        self.display_groups(all_groups)
 #         self.group1_vertical_layout = QtWidgets.QVBoxLayout()
 #         self.group1_vertical_layout.setObjectName("group1_vertical_layout")
 #         self.group1 = QtWidgets.QGroupBox(self.each_group_layout)
@@ -465,10 +470,10 @@ class Ui_group(object):
         self.scrollArea.setWidget(self.group_scrollArea)
         self.horizontalLayout.addWidget(self.scrollArea)
 
-        self.retranslateUi(Form)
+        self.retranslateUi(Form, all_groups)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
-    def retranslateUi(self, Form):
+    def retranslateUi(self, Form, groups):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("group", "Form"))
         self.group_header.setText(_translate("group", "<html><head/><body><p><span style=\" font-family:\'Segoe UI\'; font-size:36pt;\">Group</span></p></body></html>"))
@@ -487,6 +492,12 @@ class Ui_group(object):
         self.completion_date_label.setText(_translate("group", "Completion Date"))
         self.create_group_title.setText(_translate("group", "Create your own group"))
         self.your_goal_label.setText(_translate("group", "Your Groups"))
+        for i in range(len(groups)):
+            if hasattr(self, f'group{i}_vertical_layout'):
+                getattr(self, f'group{i}_completionDate').setText(_translate("group", f"Completion date: {groups[i].date}"))
+                getattr(self, f'leave_group{i}_button').setText(_translate("group", "Leave Group"))
+                getattr(self, f'group{i}_name').setText(_translate("group", f"{groups[i].groupName}"))
+                getattr(self, f'group{i}_goal').setText(_translate("group", f"{groups[i].goal_description}"))
         # self.group1_completionDate.setText(_translate("group", "Completion date: 02/04/2020"))
         # self.leave_group_button1.setText(_translate("group", "Leave Group"))
         # self.group1_name.setText(_translate("group", "Group Name 1"))
@@ -509,87 +520,109 @@ class Ui_group(object):
             no_group_text.setWordWrap(False)
             no_group_text.setAlignment(QtCore.Qt.AlignCenter | QtCore.Qt.AlignVCenter)
             no_group_text.setObjectName("no_group_text")
-            no_group_text.setText('No goal was set yet')
+            no_group_text.setText('No groups yet')
             self.verticalLayout_7.addWidget(no_group_text)
             return
+
         for i, group in enumerate(groups):
-            self.group2_vertical_layout = QtWidgets.QVBoxLayout()
-            self.group2_vertical_layout.setObjectName("group2_vertical_layout")
-            self.group2 = QtWidgets.QGroupBox(self.each_group_layout)
-            self.group2.setEnabled(True)
+            # add a vertical Layout to the page
+            setattr(self, f'group{i}_vertical_layout', QtWidgets.QVBoxLayout())
+            mygroup_layout = getattr(self, f'group{i}_vertical_layout')
+            #self.group2_vertical_layout = QtWidgets.QVBoxLayout()
+            mygroup_layout.setObjectName(f"group{i}_vertical_layout")
+
+            setattr(self, f'group{i}', QtWidgets.QGroupBox(self.each_group_layout))
+            #self.group2 = QtWidgets.QGroupBox(self.each_group_layout)
+            mygroup = getattr(self, f'group{i}')
+            mygroup.setEnabled(True)
             sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding,
                                                QtWidgets.QSizePolicy.MinimumExpanding)
             sizePolicy.setHorizontalStretch(0)
             sizePolicy.setVerticalStretch(0)
-            sizePolicy.setHeightForWidth(self.group2.sizePolicy().hasHeightForWidth())
-            self.group2.setSizePolicy(sizePolicy)
-            self.group2.setMinimumSize(QtCore.QSize(257, 0))
-            self.group2.setStyleSheet("QGroupBox{\n"
-                                      "background:rgb(217, 217, 217); \n"
-                                      "color:rgb(62, 62, 62);\n"
-                                      "}")
-            self.group2.setTitle("")
-            self.group2.setObjectName("group2")
-            self.gridLayout_8 = QtWidgets.QGridLayout(self.group2)
+            sizePolicy.setHeightForWidth(mygroup.sizePolicy().hasHeightForWidth())
+            mygroup.setSizePolicy(sizePolicy)
+            mygroup.setMinimumSize(QtCore.QSize(257, 0))
+            mygroup.setStyleSheet("QGroupBox{\n"
+                                  "background:rgb(217, 217, 217); \n"
+                                  "color:rgb(62, 62, 62);\n"
+                                  "}")
+            mygroup.setTitle("")
+            mygroup.setObjectName(f"group{i}")
+            self.gridLayout_8 = QtWidgets.QGridLayout(mygroup)
             self.gridLayout_8.setObjectName("gridLayout_8")
-            self.group2_goal = QtWidgets.QLabel(self.group2)
+
+            setattr(self, f'group{i}_goal', QtWidgets.QLabel(mygroup))
+            mygroup_goal = getattr(self, f'group{i}_goal')
+            #self.group2_goal = QtWidgets.QLabel(self.group2)
             font = QtGui.QFont()
             font.setPointSize(16)
-            self.group2_goal.setFont(font)
-            self.group2_goal.setStyleSheet("QLabel{\n"
-                                           "background:rgb(217, 217, 217); \n"
-                                           "color:rgb(62, 62, 62);\n"
-                                           "}")
-            self.group2_goal.setWordWrap(False)
-            self.group2_goal.setObjectName("group2_goal")
-            self.gridLayout_8.addWidget(self.group2_goal, 1, 0, 1, 1)
-            self.leave_group_button2 = QtWidgets.QPushButton(self.group2)
+            mygroup_goal.setFont(font)
+            mygroup_goal.setStyleSheet("QLabel{\n"
+                                       "background:rgb(217, 217, 217); \n"
+                                       "color:rgb(62, 62, 62);\n"
+                                       "}")
+            mygroup_goal.setWordWrap(False)
+            mygroup_goal.setObjectName(f"group{i}_goal")
+            self.gridLayout_8.addWidget(mygroup_goal, 1, 0, 1, 1)
+
+            setattr(self, f'leave_group{i}_button', QtWidgets.QPushButton(mygroup))
+            mygroup_leave_button = getattr(self, f'leave_group{i}_button')
+            #self.leave_group_button2 = QtWidgets.QPushButton(mygroup)
             sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Expanding)
             sizePolicy.setHorizontalStretch(0)
             sizePolicy.setVerticalStretch(0)
-            sizePolicy.setHeightForWidth(self.leave_group_button2.sizePolicy().hasHeightForWidth())
-            self.leave_group_button2.setSizePolicy(sizePolicy)
-            self.leave_group_button2.setStyleSheet("padding: 10 15 10 15;")
+            sizePolicy.setHeightForWidth(mygroup_leave_button.sizePolicy().hasHeightForWidth())
+            mygroup_leave_button.setSizePolicy(sizePolicy)
+            mygroup_leave_button.setStyleSheet("padding: 10 15 10 15;")
             icon = QtGui.QIcon.fromTheme("sidebar_icon")
-            self.leave_group_button2.setIcon(icon)
-            self.leave_group_button2.setObjectName("leave_group_button2")
-            self.gridLayout_8.addWidget(self.leave_group_button2, 0, 1, 1, 1)
-            self.group2_progressBar = QtWidgets.QProgressBar(self.group2)
-            self.group2_progressBar.setStyleSheet("QProgressBar::chunk {\n"
-                                                  "     background-color: #3add36;\n"
-                                                  "     width: 1px;\n"
-                                                  " }\n"
-                                                  "\n"
-                                                  " QProgressBar {\n"
-                                                  "     \n"
-                                                  "     border-radius: 0px;\n"
-                                                  "     text-align: center;\n"
-                                                  " }")
-            self.group2_progressBar.setProperty("value", 10)
-            self.group2_progressBar.setInvertedAppearance(False)
-            self.group2_progressBar.setObjectName("group2_progressBar")
-            self.gridLayout_8.addWidget(self.group2_progressBar, 2, 0, 1, 2)
-            self.group2_completionDate = QtWidgets.QLabel(self.group2)
+            mygroup_leave_button.setIcon(icon)
+            mygroup_leave_button.setObjectName(f"leave_group{i}_button")
+            self.gridLayout_8.addWidget(mygroup_leave_button, 0, 1, 1, 1)
+
+            setattr(self, f'group{i}_progressBar', QtWidgets.QProgressBar(mygroup))
+            mygroup_goal_progress = getattr(self, f'group{i}_progressBar')
+            #self.group2_progressBar = QtWidgets.QProgressBar(mygroup)
+            mygroup_goal_progress.setStyleSheet("QProgressBar::chunk {\n"
+                                              "     background-color: #3add36;\n"
+                                              "     width: 1px;\n"
+                                              " }\n"
+                                              "\n"
+                                              " QProgressBar {\n"
+                                              "     \n"
+                                              "     border-radius: 0px;\n"
+                                              "     text-align: center;\n"
+                                              " }")
+            mygroup_goal_progress.setProperty("value", 10)
+            mygroup_goal_progress.setInvertedAppearance(False)
+            mygroup_goal_progress.setObjectName(f"group{i}_progressBar")
+            self.gridLayout_8.addWidget(mygroup_goal_progress, 2, 0, 1, 2)
+
+            setattr(self, f'group{i}_completionDate', QtWidgets.QLabel(mygroup))
+            mygroup_goal_completionDate = getattr(self, f'group{i}_completionDate')
+            #self.group2_completionDate = QtWidgets.QLabel(mygroup)
             font = QtGui.QFont()
             font.setPointSize(16)
-            self.group2_completionDate.setFont(font)
-            self.group2_completionDate.setStyleSheet("background: none;")
-            self.group2_completionDate.setWordWrap(False)
-            self.group2_completionDate.setObjectName("group2_completionDate")
-            self.gridLayout_8.addWidget(self.group2_completionDate, 1, 1, 1, 1)
-            self.group2_name = QtWidgets.QLabel(self.group2)
+            mygroup_goal_completionDate.setFont(font)
+            mygroup_goal_completionDate.setStyleSheet("background: none;")
+            mygroup_goal_completionDate.setWordWrap(False)
+            mygroup_goal_completionDate.setObjectName(f"group{i}_completionDate")
+            self.gridLayout_8.addWidget(mygroup_goal_completionDate, 1, 1, 1, 1)
+
+            setattr(self, f'group{i}_name', QtWidgets.QLabel(mygroup))
+            mygroup_name = getattr(self, f'group{i}_name')
+            #self.group2_name = QtWidgets.QLabel(mygroup)
             font = QtGui.QFont()
             font.setPointSize(20)
-            self.group2_name.setFont(font)
-            self.group2_name.setStyleSheet("QLabel{\n"
-                                           "background:rgb(217, 217, 217); \n"
-                                           "color:rgb(62, 62, 62);\n"
-                                           "}")
-            self.group2_name.setWordWrap(False)
-            self.group2_name.setObjectName("group2_name")
-            self.gridLayout_8.addWidget(self.group2_name, 0, 0, 1, 1)
-            self.group2_vertical_layout.addWidget(self.group2)
-            self.verticalLayout_7.addLayout(self.group2_vertical_layout)
+            mygroup_name.setFont(font)
+            mygroup_name.setStyleSheet("QLabel{\n"
+                                       "background:rgb(217, 217, 217); \n"
+                                       "color:rgb(62, 62, 62);\n"
+                                       "}")
+            mygroup_name.setWordWrap(False)
+            mygroup_name.setObjectName(f"group{i}_name")
+            self.gridLayout_8.addWidget(mygroup_name, 0, 0, 1, 1)
+            mygroup_layout.addWidget(mygroup)
+            self.verticalLayout_7.addLayout(mygroup_layout)
 
 
 if __name__ == "__main__":
