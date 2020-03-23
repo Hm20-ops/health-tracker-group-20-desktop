@@ -12,10 +12,10 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_Goal(object):
     # view constructor for calling setupUi and passing model data to view
-    def __init__(self, parent, user_goals):
-        self.setupUi(parent, user_goals)
+    def __init__(self, parent, basic_goal, user_goals):
+        self.setupUi(parent, basic_goal, user_goals)
 
-    def setupUi(self, Form, user_goals):
+    def setupUi(self, Form, basic_goal, user_goals):
         Form.setObjectName("Form")
         Form.resize(1077, 810)
         self.verticalLayout = QtWidgets.QVBoxLayout(Form)
@@ -128,6 +128,7 @@ class Ui_Goal(object):
         self.add_basic_goal.setIcon(icon)
         self.add_basic_goal.setObjectName("add_basic_goal")
         self.horizontalLayout_9.addWidget(self.basic_goal)
+
         self.custom_goal = QtWidgets.QGroupBox(self.goal)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(1)
@@ -255,7 +256,9 @@ class Ui_Goal(object):
         self.your_goals_frame.setObjectName("your_goals_frame")
         self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.your_goals_frame)
         self.verticalLayout_3.setObjectName("verticalLayout_3")
-        self.display_goals(user_goals)
+
+        # call display function here
+        self.display_goals(basic_goal, user_goals)
         self.verticalLayout_2.addWidget(self.your_goals_frame)
         self.verticalLayout_22.addLayout(self.verticalLayout_2)
         self.horizontalLayout_14.addWidget(self.wrapper)
@@ -287,8 +290,8 @@ class Ui_Goal(object):
         self.info_text.setText(_translate("Form", "Explain how many days per period do you want to repeat this goal"))
         self.Your_goals_header.setText(_translate("Form", "Your Goals"))
 
-
-    def display_goals(self, goals):
+    #function to display the goals obtained from the database
+    def display_goals(self, basic_goal, goals):
         from datetime import datetime
         if len(goals) == 0:
             print('No goals set yet')
@@ -304,6 +307,61 @@ class Ui_Goal(object):
             no_goal_text.setText('No goal was set yet')
             self.verticalLayout_3.addWidget(no_goal_text)
             return
+        if basic_goal is not None:
+            self.user_basic_goal = QtWidgets.QGroupBox(self.your_goals_frame)
+            sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding,
+                                               QtWidgets.QSizePolicy.MinimumExpanding)
+            sizePolicy.setHorizontalStretch(0)
+            sizePolicy.setVerticalStretch(0)
+            sizePolicy.setHeightForWidth(self.user_basic_goal.sizePolicy().hasHeightForWidth())
+            self.user_basic_goal.setSizePolicy(sizePolicy)
+            self.user_basic_goal.setMinimumSize(QtCore.QSize(200, 0))
+            self.user_basic_goal.setStyleSheet("QGroupBox{\n"
+                                 "background:rgb(217, 217, 217); \n"
+                                 "color:rgb(62, 62, 62);\n"
+                                 "}")
+            self.user_basic_goal.setObjectName(f"user_basic_goal")
+            verticalLayout = QtWidgets.QVBoxLayout(self.user_basic_goal)
+
+            self.user_basic_goal.date = QtWidgets.QLabel(self.user_basic_goal)
+            font = QtGui.QFont()
+            font.setPointSize(15)
+            self.user_basic_goal.date.setFont(font)
+            self.user_basic_goal.date.setStyleSheet("background: none;")
+            self.user_basic_goal.date.setWordWrap(False)
+            self.user_basic_goal.date.setObjectName(f"basic_goal_deadline")
+            self.user_basic_goal.date.setText('Completion date: ' + datetime.strftime(basic_goal.date, '%d/%m/%Y'))
+            verticalLayout.addWidget(self.user_basic_goal.date)
+
+            self.user_basic_goal.target = QtWidgets.QLabel(self.user_basic_goal)
+            font = QtGui.QFont()
+            font.setPointSize(20)
+            self.user_basic_goal.target.setFont(font)
+            self.user_basic_goal.target.setStyleSheet("QLabel{\n"
+                                             "background:rgb(217, 217, 217); \n"
+                                             "color:rgb(62, 62, 62);\n"
+                                             "}")
+            self.user_basic_goal.target.setWordWrap(False)
+            self.user_basic_goal.target.setObjectName(f"basic_goal target")
+            self.user_basic_goal.target.setText(f"Weight goal: {basic_goal.target_weight}")
+            verticalLayout.addWidget(self.user_basic_goal.target)
+            self.user_basic_goal.progress = QtWidgets.QProgressBar(self.user_basic_goal)
+            self.user_basic_goal.progress.setStyleSheet("QProgressBar::chunk {\n"
+                                      "     background-color: #3add36;\n"
+                                      "     width: 1px;\n"
+                                      " }\n"
+                                      "\n"
+                                      " QProgressBar {\n"
+                                      "     \n"
+                                      "     border-radius: 0px;\n"
+                                      "     text-align: center;\n"
+                                      " }")
+            self.user_basic_goal.progress.setProperty("value", 10)
+            self.user_basic_goal.progress.setInvertedAppearance(False)
+            self.user_basic_goal.progress.setObjectName(f"basic_goal_progress")
+            verticalLayout.addWidget(self.user_basic_goal.progress)
+            self.verticalLayout_3.addWidget(self.user_basic_goal)
+
         for i, goal in enumerate(goals):
             # set up the goal box
             setattr(self, f'goal_{i + 1}', QtWidgets.QGroupBox(self.your_goals_frame))
@@ -348,6 +406,8 @@ class Ui_Goal(object):
             mygoal_description.setObjectName(f"mygoal_title_{i + 1}")
             mygoal_description.setText(f"{goal.goal_description}")
             verticalLayout.addWidget(mygoal_description)
+
+            # set progressbar (functionality will be implemented in stage 2)
             progressBar = QtWidgets.QProgressBar(mygoal)
             progressBar.setStyleSheet("QProgressBar::chunk {\n"
                                       "     background-color: #3add36;\n"

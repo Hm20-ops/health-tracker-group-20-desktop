@@ -17,7 +17,7 @@ class BasicGoal(Base):
 
     def get(self, username):
         session = make_session()
-        basic_goal = session.query(BasicGoal).filter(BasicGoal.username == username).all()
+        basic_goal = session.query(BasicGoal).filter(BasicGoal.username == username).first()
         session.close()
         return basic_goal
 
@@ -31,10 +31,3 @@ class BasicGoal(Base):
         session.add(basic_goal)
         session.commit()
         session.close()
-
-def main():
-    print()
-
-
-if __name__ == '__main__':
-    main()

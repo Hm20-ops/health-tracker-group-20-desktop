@@ -18,12 +18,11 @@ class goalPresenter:
         self._basic_goal_model = BasicGoal()
         self._user_custom_goal_model = CustomGoal()
 
-        # get data from model, functions that do basic conventional stuff(CRUD)
-        # can be written in model and call here, u can directly query here for more complex actions
+        # get data from model
         user_goals = self._user_custom_goal_model.get(username)
-
+        basic_goal = self._basic_goal_model.get(username)
         # initialize the view and pass the above above data to the view
-        self._view = Ui_Goal(parent, user_goals)
+        self._view = Ui_Goal(parent, basic_goal, user_goals)
 
         # connect all signals to the functions in this presenter
         self._view.add_basic_goal.clicked.connect(lambda: self.make_basic_goal())
@@ -41,8 +40,6 @@ class goalPresenter:
             print(e)
             display_message('Fail to create basic goal',
                             'Please check if you have already created a new basic goal')
-
-    # implement this method in basic goal model
 
     def make_custom_goal(self):
         # get data from the view
