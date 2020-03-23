@@ -1,7 +1,7 @@
 from sqlalchemy.orm import relationship
 from sqlalchemy import *
-from GoalInterface import GoalInterface
 from sqlalchemy.sql import func
+from Group import Group
 from ModelHandler import *
 
 class CustomGoal(Base):
@@ -25,7 +25,7 @@ class CustomGoal(Base):
     pass_interval = Column(Integer, nullable=False)
     group_id = Column(ForeignKey('Group.groupId', ondelete='CASCADE'), nullable=False)
 
-    group = relationship('Group')
+    Group = relationship('Group')
     User = relationship('User')
 
     def get(self, username):

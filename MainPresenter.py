@@ -11,6 +11,7 @@ from profilePresenter import profilePresenter
 from goalPresenter import goalPresenter
 from DietPresenter import DietPresenter
 from ExercisePresenter import ExercisePresenter
+from GroupPresenter import GroupPresenter
 
 nav_bar_map = ['HOME', 'PROFILE', 'GOAL', 'EXERCISE', 'DIET', 'GROUP', 'LOGOUT']
 
@@ -65,7 +66,7 @@ class MainPresenter:
         return DietPresenter(self.view_page, self._user).page()
 
     def group(self):
-        return
+        return GroupPresenter(self.view_page, self._user).page()
 
     def logout(self):
         self._view.close()

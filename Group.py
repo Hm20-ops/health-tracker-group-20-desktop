@@ -17,7 +17,7 @@ from alembic import op
 from sqlalchemy import Column
 
 import User
-from CustomGoal import CustomGoal
+
 from ModelHandler import *
 
 
@@ -41,50 +41,15 @@ class Group(Base):
         session.commit()  # need to commit for changes to appear in database
         session.close()
 
-    @staticmethod
-    def get_all_group():
-        session = make_session()
-        # query FoodDictionary to fetch all rows
-        data = session.query(Group).join(CustomGoal) \
-            .with_entities(Group.groupName, CustomGoal.goal_description).all()
-        session.close()
-        return data
-
-    # def __init__(self, name, type, admin=[], members=[], common_goal=None):
-    #     self.__id = id(self)
-    #     self.__name = name
-    #     GroupType = Enum('GroupType', 'OPEN RESTRICTED')
-    #     self.__type = GroupType[type.upper()]
-    #     self.__admin = admin
-    #     self.__members = members
-    #     self.__common_goal = common_goal
-    #
-    # def set_goal(self, goal):
-    #     self.__common_goal = goal
-    #
-    # def invite(self, user):
-    #     self.__members.append(user)
-    #
-    # def goal_archived(self):
-    #     return self.__common_goal.date == datetime.now()
-    #
-    # def send_details(self, goal):
-    #     pass
-    #
-    # def send_goal(self, goal):
-    #     pass
-    #
-    # def accept_user(self, user):
-    #     pass
-    #
-    # def is_admin(self, user):
-    #     return self.__admin.contains(user)
-    #
-    # def kick_user(self, user):
-    #     if user not in self.__members:
-    #         raise ValueError('User not in the group')
-    #     self.__members.remove(user)
-
+    # @staticmethod
+    # def get_all_group():
+    #     #import CustomGoal
+    #     session = make_session()
+    #     # query FoodDictionary to fetch all rows
+    #     data = session.query(Group).join(CustomGoal) \
+    #         .with_entities(Group.groupName, CustomGoal.goal_description).all()
+    #     session.close()
+    #     return data
 
 def main():
     metadata = MetaData()
@@ -114,3 +79,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+

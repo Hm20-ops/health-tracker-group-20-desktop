@@ -123,8 +123,8 @@ class DietPresenter:
             print('not allowed')
             display_message('Input cannot be empty', 'Please enter valid food name and calories')
         else:
-            foodName=self.ui.name_input.text()
-            calories=self.ui.calories_input.text()
+            foodName = self.ui.name_input.text()
+            calories = self.ui.calories_input.text()
             try:
                 FoodDictionary.addFood(foodName, calories)
                 self.data = self._food_model.get_all_food()
