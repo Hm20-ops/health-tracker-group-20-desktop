@@ -88,7 +88,7 @@ class Ui_Goal(object):
         font.setPointSize(10)
         self.lose_weight_goal.setFont(font)
         self.lose_weight_goal.setDecimals(1)
-        self.lose_weight_goal.setProperty("value", 68.5)
+        self.lose_weight_goal.setProperty("value", 55)
         self.lose_weight_goal.setObjectName("lose_weight_goal")
         self.basic_goal_completion_date = QtWidgets.QDateEdit(self.basic_goal)
         self.basic_goal_completion_date.setGeometry(QtCore.QRect(250, 140, 271, 31))

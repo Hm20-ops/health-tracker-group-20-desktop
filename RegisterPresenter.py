@@ -47,7 +47,7 @@ class RegisterPresenter:
 
         # try to add new user to database
         try:
-            print('adding user')
+
             # obtain all information inputted on the view
             name = self._view.name.text()
             gender = self._view.gender.currentText().lower()
@@ -59,7 +59,7 @@ class RegisterPresenter:
             email = self._view.email.text()
             height = int(self._view.height.text())
             weight = int(self._view.weight.text())
-            print(username, email, password, name, dob, weight, height, gender)
+
             if not _add_validation():
                 return
             # ask model to create a new user

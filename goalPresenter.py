@@ -6,6 +6,7 @@ import User
 from CustomGoal import *
 from BasicGoal import *
 from goalView import Ui_Goal
+from helper import display_message
 
 
 class goalPresenter:
@@ -30,11 +31,16 @@ class goalPresenter:
 
     def make_basic_goal(self):
         # get data from the view
-
         weight_goal = self._view.lose_weight_goal.value()
         complete_date = self._view.basic_goal_completion_date.date().toPyDate()
         # pass them to model to create basic goal
-        self._basic_goal_model.create_basic_goal(self._user, weight_goal, complete_date)
+        try:
+            self._basic_goal_model.create_basic_goal(self._user, weight_goal, complete_date)
+            display_message('Basic goal created', 'You have just created a basic goal', False)
+        except Exception as e:
+            print(e)
+            display_message('Fail to create basic goal',
+                            'Please check if you have already created a new basic goal')
 
     # implement this method in basic goal model
 
@@ -45,10 +51,15 @@ class goalPresenter:
         period = self._view.period.value()
         complete_date = self._view.completion_date.date().toPyDate()
         # pass them to model to create custom goal
-        # not sure if I am doing this right, PLEASE check carefully
-        self._user_custom_goal_model.create_custom_goal(self._user, description, complete_date,
+        try:
+            self._user_custom_goal_model.create_custom_goal(self._user, description, complete_date,
                                                         checkin_interval=days, act_period_length=period)
-    # more functions below here
+            display_message('Custom goal created', 'You have just created a new custom goal', False)
+        except Exception as e:
+            print(e)
+            display_message('Fail to create custom goal',
+                            'Please check if you have already created a new basic goal')
+
 
 
     # accessor function for the view to allow main presenter to change the view to this

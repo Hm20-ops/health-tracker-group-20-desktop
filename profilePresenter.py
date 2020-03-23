@@ -55,7 +55,7 @@ class profilePresenter:
             # push changes to the database
             self._user_model.edit_details(user, new_username, new_name, new_dob,
                                           new_gender, new_weight, new_height, new_email)
-            display_message('Details editted successfully', 'You have update your details!')
+            display_message('Details editted successfully', 'You have update your details!', False)
 
     def enable_edit(self):
         if not self._view.edit_info.isEnabled():
