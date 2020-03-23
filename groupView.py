@@ -312,158 +312,6 @@ class Ui_group(object):
         self.verticalLayout_7 = QtWidgets.QVBoxLayout(self.each_group_layout)
         self.verticalLayout_7.setObjectName("verticalLayout_7")
         self.display_groups(all_groups)
-#         self.group1_vertical_layout = QtWidgets.QVBoxLayout()
-#         self.group1_vertical_layout.setObjectName("group1_vertical_layout")
-#         self.group1 = QtWidgets.QGroupBox(self.each_group_layout)
-#         self.group1.setEnabled(True)
-#         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.MinimumExpanding)
-#         sizePolicy.setHorizontalStretch(0)
-#         sizePolicy.setVerticalStretch(0)
-#         sizePolicy.setHeightForWidth(self.group1.sizePolicy().hasHeightForWidth())
-#         self.group1.setSizePolicy(sizePolicy)
-#         self.group1.setMinimumSize(QtCore.QSize(257, 0))
-#         self.group1.setStyleSheet("QGroupBox{\n"
-# "background:rgb(217, 217, 217); \n"
-# "color:rgb(62, 62, 62);\n"
-# "}")
-#         self.group1.setTitle("")
-#         self.group1.setObjectName("group1")
-#         self.gridLayout_7 = QtWidgets.QGridLayout(self.group1)
-#         self.gridLayout_7.setObjectName("gridLayout_7")
-#         self.group1_progressBar = QtWidgets.QProgressBar(self.group1)
-#         self.group1_progressBar.setStyleSheet("QProgressBar::chunk {\n"
-# "     background-color: #3add36;\n"
-# "     width: 1px;\n"
-# " }\n"
-# "\n"
-# " QProgressBar {\n"
-# "     \n"
-# "     border-radius: 0px;\n"
-# "     text-align: center;\n"
-# " }")
-#         self.group1_progressBar.setProperty("value", 86)
-#         self.group1_progressBar.setInvertedAppearance(False)
-#         self.group1_progressBar.setObjectName("group1_progressBar")
-#         self.gridLayout_7.addWidget(self.group1_progressBar, 2, 0, 1, 2)
-#         self.group1_completionDate = QtWidgets.QLabel(self.group1)
-#         font = QtGui.QFont()
-#         font.setPointSize(16)
-#         self.group1_completionDate.setFont(font)
-#         self.group1_completionDate.setStyleSheet("background: none;")
-#         self.group1_completionDate.setWordWrap(False)
-#         self.group1_completionDate.setObjectName("group1_completionDate")
-#         self.gridLayout_7.addWidget(self.group1_completionDate, 1, 1, 1, 1)
-#         self.leave_group_button1 = QtWidgets.QPushButton(self.group1)
-#         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Expanding)
-#         sizePolicy.setHorizontalStretch(0)
-#         sizePolicy.setVerticalStretch(0)
-#         sizePolicy.setHeightForWidth(self.leave_group_button1.sizePolicy().hasHeightForWidth())
-#         self.leave_group_button1.setSizePolicy(sizePolicy)
-#         self.leave_group_button1.setStyleSheet("padding: 10 15 10 15;")
-#         icon = QtGui.QIcon.fromTheme("sidebar_icon")
-#         self.leave_group_button1.setIcon(icon)
-#         self.leave_group_button1.setObjectName("leave_group_button1")
-#         self.gridLayout_7.addWidget(self.leave_group_button1, 0, 1, 1, 1)
-#         self.group1_name = QtWidgets.QLabel(self.group1)
-#         font = QtGui.QFont()
-#         font.setPointSize(20)
-#         self.group1_name.setFont(font)
-#         self.group1_name.setStyleSheet("QLabel{\n"
-# "background:rgb(217, 217, 217); \n"
-# "color:rgb(62, 62, 62);\n"
-# "}")
-#         self.group1_name.setWordWrap(False)
-#         self.group1_name.setObjectName("group1_name")
-#         self.gridLayout_7.addWidget(self.group1_name, 0, 0, 1, 1)
-#         self.group1_goal = QtWidgets.QLabel(self.group1)
-#         font = QtGui.QFont()
-#         font.setPointSize(16)
-#         self.group1_goal.setFont(font)
-#         self.group1_goal.setStyleSheet("QLabel{\n"
-# "background:rgb(217, 217, 217); \n"
-# "color:rgb(62, 62, 62);\n"
-# "}")
-#         self.group1_goal.setWordWrap(False)
-#         self.group1_goal.setObjectName("group1_goal")
-#         self.gridLayout_7.addWidget(self.group1_goal, 1, 0, 1, 1)
-#         self.group1_vertical_layout.addWidget(self.group1)
-#         self.verticalLayout_7.addLayout(self.group1_vertical_layout)
-#         self.group2_vertical_layout = QtWidgets.QVBoxLayout()
-#         self.group2_vertical_layout.setObjectName("group2_vertical_layout")
-#         self.group2 = QtWidgets.QGroupBox(self.each_group_layout)
-#         self.group2.setEnabled(True)
-#         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.MinimumExpanding)
-#         sizePolicy.setHorizontalStretch(0)
-#         sizePolicy.setVerticalStretch(0)
-#         sizePolicy.setHeightForWidth(self.group2.sizePolicy().hasHeightForWidth())
-#         self.group2.setSizePolicy(sizePolicy)
-#         self.group2.setMinimumSize(QtCore.QSize(257, 0))
-#         self.group2.setStyleSheet("QGroupBox{\n"
-# "background:rgb(217, 217, 217); \n"
-# "color:rgb(62, 62, 62);\n"
-# "}")
-#         self.group2.setTitle("")
-#         self.group2.setObjectName("group2")
-#         self.gridLayout_8 = QtWidgets.QGridLayout(self.group2)
-#         self.gridLayout_8.setObjectName("gridLayout_8")
-#         self.group2_goal = QtWidgets.QLabel(self.group2)
-#         font = QtGui.QFont()
-#         font.setPointSize(16)
-#         self.group2_goal.setFont(font)
-#         self.group2_goal.setStyleSheet("QLabel{\n"
-# "background:rgb(217, 217, 217); \n"
-# "color:rgb(62, 62, 62);\n"
-# "}")
-#         self.group2_goal.setWordWrap(False)
-#         self.group2_goal.setObjectName("group2_goal")
-#         self.gridLayout_8.addWidget(self.group2_goal, 1, 0, 1, 1)
-#         self.leave_group_button2 = QtWidgets.QPushButton(self.group2)
-#         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Expanding)
-#         sizePolicy.setHorizontalStretch(0)
-#         sizePolicy.setVerticalStretch(0)
-#         sizePolicy.setHeightForWidth(self.leave_group_button2.sizePolicy().hasHeightForWidth())
-#         self.leave_group_button2.setSizePolicy(sizePolicy)
-#         self.leave_group_button2.setStyleSheet("padding: 10 15 10 15;")
-#         icon = QtGui.QIcon.fromTheme("sidebar_icon")
-#         self.leave_group_button2.setIcon(icon)
-#         self.leave_group_button2.setObjectName("leave_group_button2")
-#         self.gridLayout_8.addWidget(self.leave_group_button2, 0, 1, 1, 1)
-#         self.group2_progressBar = QtWidgets.QProgressBar(self.group2)
-#         self.group2_progressBar.setStyleSheet("QProgressBar::chunk {\n"
-# "     background-color: #3add36;\n"
-# "     width: 1px;\n"
-# " }\n"
-# "\n"
-# " QProgressBar {\n"
-# "     \n"
-# "     border-radius: 0px;\n"
-# "     text-align: center;\n"
-# " }")
-#         self.group2_progressBar.setProperty("value", 10)
-#         self.group2_progressBar.setInvertedAppearance(False)
-#         self.group2_progressBar.setObjectName("group2_progressBar")
-#         self.gridLayout_8.addWidget(self.group2_progressBar, 2, 0, 1, 2)
-#         self.group2_completionDate = QtWidgets.QLabel(self.group2)
-#         font = QtGui.QFont()
-#         font.setPointSize(16)
-#         self.group2_completionDate.setFont(font)
-#         self.group2_completionDate.setStyleSheet("background: none;")
-#         self.group2_completionDate.setWordWrap(False)
-#         self.group2_completionDate.setObjectName("group2_completionDate")
-#         self.gridLayout_8.addWidget(self.group2_completionDate, 1, 1, 1, 1)
-#         self.group2_name = QtWidgets.QLabel(self.group2)
-#         font = QtGui.QFont()
-#         font.setPointSize(20)
-#         self.group2_name.setFont(font)
-#         self.group2_name.setStyleSheet("QLabel{\n"
-# "background:rgb(217, 217, 217); \n"
-# "color:rgb(62, 62, 62);\n"
-# "}")
-#         self.group2_name.setWordWrap(False)
-#         self.group2_name.setObjectName("group2_name")
-#         self.gridLayout_8.addWidget(self.group2_name, 0, 0, 1, 1)
-#         self.group2_vertical_layout.addWidget(self.group2)
-#         self.verticalLayout_7.addLayout(self.group2_vertical_layout)
         self.group_box.addWidget(self.each_group_layout)
         self.verticalLayout_6.addLayout(self.group_box)
         self.horizontalLayout_19.addWidget(self.group_frame)
@@ -498,14 +346,6 @@ class Ui_group(object):
                 getattr(self, f'leave_group{i}_button').setText(_translate("group", "Leave Group"))
                 getattr(self, f'group{i}_name').setText(_translate("group", f"{groups[i].groupName}"))
                 getattr(self, f'group{i}_goal').setText(_translate("group", f"{groups[i].goal_description}"))
-        # self.group1_completionDate.setText(_translate("group", "Completion date: 02/04/2020"))
-        # self.leave_group_button1.setText(_translate("group", "Leave Group"))
-        # self.group1_name.setText(_translate("group", "Group Name 1"))
-        # self.group1_goal.setText(_translate("group", "Eat 500g of chicken"))
-        # self.group2_goal.setText(_translate("group", "Run 10km"))
-        # self.leave_group_button2.setText(_translate("group", "Leave Group"))
-        # self.group2_completionDate.setText(_translate("group", "Completion date: 18/05/2020"))
-        # self.group2_name.setText(_translate("group", "Group Name 2"))
 
     def display_groups(self, groups):
         from datetime import datetime
@@ -528,11 +368,9 @@ class Ui_group(object):
             # add a vertical Layout to the page
             setattr(self, f'group{i}_vertical_layout', QtWidgets.QVBoxLayout())
             mygroup_layout = getattr(self, f'group{i}_vertical_layout')
-            #self.group2_vertical_layout = QtWidgets.QVBoxLayout()
             mygroup_layout.setObjectName(f"group{i}_vertical_layout")
 
             setattr(self, f'group{i}', QtWidgets.QGroupBox(self.each_group_layout))
-            #self.group2 = QtWidgets.QGroupBox(self.each_group_layout)
             mygroup = getattr(self, f'group{i}')
             mygroup.setEnabled(True)
             sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding,
@@ -553,7 +391,6 @@ class Ui_group(object):
 
             setattr(self, f'group{i}_goal', QtWidgets.QLabel(mygroup))
             mygroup_goal = getattr(self, f'group{i}_goal')
-            #self.group2_goal = QtWidgets.QLabel(self.group2)
             font = QtGui.QFont()
             font.setPointSize(16)
             mygroup_goal.setFont(font)
@@ -567,7 +404,6 @@ class Ui_group(object):
 
             setattr(self, f'leave_group{i}_button', QtWidgets.QPushButton(mygroup))
             mygroup_leave_button = getattr(self, f'leave_group{i}_button')
-            #self.leave_group_button2 = QtWidgets.QPushButton(mygroup)
             sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Expanding)
             sizePolicy.setHorizontalStretch(0)
             sizePolicy.setVerticalStretch(0)
@@ -581,7 +417,6 @@ class Ui_group(object):
 
             setattr(self, f'group{i}_progressBar', QtWidgets.QProgressBar(mygroup))
             mygroup_goal_progress = getattr(self, f'group{i}_progressBar')
-            #self.group2_progressBar = QtWidgets.QProgressBar(mygroup)
             mygroup_goal_progress.setStyleSheet("QProgressBar::chunk {\n"
                                               "     background-color: #3add36;\n"
                                               "     width: 1px;\n"
@@ -599,7 +434,6 @@ class Ui_group(object):
 
             setattr(self, f'group{i}_completionDate', QtWidgets.QLabel(mygroup))
             mygroup_goal_completionDate = getattr(self, f'group{i}_completionDate')
-            #self.group2_completionDate = QtWidgets.QLabel(mygroup)
             font = QtGui.QFont()
             font.setPointSize(16)
             mygroup_goal_completionDate.setFont(font)
@@ -610,7 +444,6 @@ class Ui_group(object):
 
             setattr(self, f'group{i}_name', QtWidgets.QLabel(mygroup))
             mygroup_name = getattr(self, f'group{i}_name')
-            #self.group2_name = QtWidgets.QLabel(mygroup)
             font = QtGui.QFont()
             font.setPointSize(20)
             mygroup_name.setFont(font)
