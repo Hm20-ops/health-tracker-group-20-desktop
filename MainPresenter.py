@@ -32,7 +32,7 @@ class MainPresenter:
         self._view.side_nav_bar.setCurrentItem(QListWidgetItem(" Home"))
         self.view_page.addWidget(self.home())
         self._view.show()
-        #self.goal_check()
+        self.goal_check()
 
 
     @pyqtSlot()
